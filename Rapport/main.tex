@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage[francais]{babel}
 
 \title{Projet de recherche}
 \author{Killian Mathias\\ Matthéo Girardclos}
@@ -9,17 +10,43 @@
 \begin{document}
 
 \maketitle
+\tableofcontents
 
 \section{Introduction}
 
-Créer des décors à la fois aléatoires et cohérent est un défi très compliqué. En effet, modéliser une montagne peut se réveler être un défi hardu, mais cela c'était avant de découvrir la génération procédurale de décors. Il existe de nombreux algorithmes permettant de générer ces décors de manière procédurale, le plus connu étant le bruit de perlin.
+En informatique, la génération procédurale fait référence à la création automatique de contenu numérique, que ce soit des éléments en 2D ou 3D, des scénarios, des dialogues, ou même des niveaux de jeu. Cette technique s'appuie sur des algorithmes qui permettent de produire une grande quantité de contenu sans nécessiter l'intervention directe d'un humain. Elle est particulièrement prisée dans les secteurs du jeu vidéo et du cinéma, où elle aide à créer des environnements variés et immersifs.  Un exemple marquant de cette méthode est le jeu Minecraft, qui génère un monde ouvert de manière procédurale grâce à différentes couches d'algorithmes. D'autres jeux, comme Terraria ou No Man’s Sky, utilisent également cette approche pour offrir des mondes dynamiques et uniques.\par
+Créer des décors qui soient à la fois aléatoires et cohérents représente un vrai défi. Par exemple, modéliser des reliefs comme des montagnes ou des plaines peut être assez complexe. La génération procédurale aide à surmonter ce problème en appliquant des algorithmes adaptés, ce qui évite de devoir concevoir chaque carte de jeu à la main.\par
+  Dans le cadre de ce projet, notre but est de développer une version simplifiée de Terraria, un jeu de survie en 2D. Ce jeu, jouable en solo ou en multijoueur, permet aux joueurs d'explorer un monde divisé en biomes, de récolter des ressources et d'interagir avec leur environnement. Nous allons nous concentrer sur la génération du monde, des biomes et éventuellement des grottes, tout en veillant à optimiser l'implémentation pour garantir de bonnes performances.
 
-\subsection{Bruit de Perlin}
 
-Le bruit de perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Son utilité principale
+\section{État de l'art}
 
-En informatique, la génération procédurale est la création de contenu numérique (en 2D, en 3D, des histoires, des dialogues, etc) en grande quantité de manière automatisée. La génération procédurale s'appuie sur des algorithmes pour créer.
-En général, cette méthode est utilisé dans les domaines du Jeu Vidéo et du cinéma. Un exemple très connu de l'utilisation de la génération procédurale est le jeu Minecraft, qui créé un monde procédural.\\
+Afin de générer procéduralement un décor il existe plusieurs approches. Tout d'abord, les objectifs d'une implémentation à une autre ne sont pas exactement les mêmes, cependant cela reste de la génération procédurale. Dans cette section, nous présenterons plusieurs méthodes populaires, en les analysant sous l’angle de leur efficacité et de leur applicabilité à notre projet de génération d’un monde 2D de type Terraria.
+
+\subsection{Différentes approches}
+
+Tout d'abord afin de répondre à nos besoins nous devons créer des paysages avec des reliefs réalistes.
+
+\subsubsection{Génération de terrains et de reliefs}
+
+Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin et le bruit Simplex.
+
+Le bruit de perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Son utilité principale est la gé
+
+\subsection{Exemples de générateurs existant}
+
+
+
+
+
+
+\section{Méthodologie}
+
+\section{Implémentation et Résultats}
+
+\section{Conclusion et Perspectives}
+
+\section{Bibliographie et références}
 \url{https://fr.wikipedia.org/wiki/Bruit_de_Perlin}\\
 \url{https://fr.minecraft.wiki/w/Génération_du_monde}\\
 \url{https://fr.wikipedia.org/wiki/Génération_procédurale}\\
