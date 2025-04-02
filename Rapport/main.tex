@@ -31,9 +31,26 @@ Tout d'abord afin de répondre à nos besoins nous devons créer des paysages av
 
 Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin et le bruit Simplex.
 
-Le bruit de perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Son utilité principale est la gé
+Le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
+Le bruit Simplex a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
 
-\subsection{Exemples de générateurs existant}
+\subsubsection{Génération de biomes}
+
+Après la génération de nos terrains, nous prévoyons d'implémenter un système de biomes. Chaque biome, représentant une zone particulière du terrain, aura ses propres caractéristiques visuelles, avec des blocs dont les textures varieront selon le biome où ils se trouvent. Pour ce faire, il existe deux approches qui sont respectivement le Bruit Worley (ou Voronoï) et définir une carte avec des températures et une humidité.\par
+La première approche a été créée par Steven Worley en 1996, et possède trois noms : le Bruit de Worley, le bruit de Voronoï et le bruit Cellulaire. Cette approche se base sur le diagramme de Voronoï, qui est un découpage d'un plan sous forme de cellules. Dans notre cas, cette méthode n'est pas forcément pertinente car elle est plus efficace sur un plan plutôt qu'en deux dimensions comme nous et les transitions entre les biomes seraient trop brutales.\par
+La seconde approche serait donc optimale car on pourrait réutiliser les algorithmes pour la génération de terrains directement pour les biomes. En effet, le Bruit de Perlin, en plus de générer les terrains, peut également nous permettre de définir une humidité ainsi qu'une température pour chaque bloc, ce qui nous permettra d'avoir de meilleures transitions entre les biomes et permettre une expérience plus agréable au joueur. On s'orientera donc vers cette approche-là car elle correspond plus à nos besoins. 
+
+\subsubsection{Génération de grottes et de cavernes}
+Une fois notre terrain et nos biomes générés, afin de notre implémentation se rapproche le plus de Terraria, il faut générer des cavernes et des grottes souterraines. Il existe également deux approches différentes pour concevoir cela qui sont le Random Walk (ou Marche Aléatoire) et une méthode qui utilise des automates cellulaires.\par
+La première méthode est un modèle mathématique qui permet de créer des donjons ainsi que des réseaux de tunnels. Nous nous focaliserons pas sur cette méthode car elle n'est pas utilisée par Terraria et que cela s'éloigne de la génération procédurale.\par 
+La seconde méthode, utilisée par Terraria mais également par le jeu de la vie, consiste en une grille régulière de cellule, et une cellule évolue en fonction de ses voisines ce qui permet de générer des grottes réalistes.
+
+\subsubsection{Génération de minerais et ressources}
+Maintenant que les grottes sont générées, il faudrait que le joueur puisse récolter des ressources. Nous n'irons pas aussi loin dans l'implémentation cependant nous générerons quand même des minerais. Il existe différentes méthodes qui permettent cela et qui sont la distribution par couches (ou Stratification) et le Bruit de Perlin appliqué au minerais. \par
+La première méthode est utilisée par Minecraft en combinaison avec le Bruit de Perlin, la seconde se combine avec la génération de terrain et donc nous utiliserons cette méthode car c'est également celle utilisée par Terraria. Nous verrons plus en détail comment nous l'utiliserons pour notre implémentation à la section \ref{Implémentation}.
+
+
+\subsection{Comparaison et choix des méthodes pour notre projet}
 
 
 
@@ -43,12 +60,16 @@ Le bruit de perlin, développé par Ken Perlin en 1985, est un système de gén�
 \section{Méthodologie}
 
 \section{Implémentation et Résultats}
-
+\label{Implémentation}
 \section{Conclusion et Perspectives}
 
 \section{Bibliographie et références}
 \url{https://fr.wikipedia.org/wiki/Bruit_de_Perlin}\\
 \url{https://fr.minecraft.wiki/w/Génération_du_monde}\\
 \url{https://fr.wikipedia.org/wiki/Génération_procédurale}\\
-\url{https://thebookofshaders.com/11/?lan=fr}
+\url{https://thebookofshaders.com/11/?lan=fr}\\
+\url{https://en.wikipedia.org/wiki/Simplex_noise}\\
+\url{https://en.wikipedia.org/wiki/Worley_noise}\\
+\url{https://fr.wikipedia.org/wiki/Diagramme_de_Voronoï}\\
+\url{https://youtu.be/Pgt82G4Jxac?si=B0K4jVE-ph3O6beT}
 \end{document}
