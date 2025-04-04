@@ -1,5 +1,6 @@
 import pygame
-
+from TileType import TileType
+from Tile import Tile
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -7,9 +8,17 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
+# Charger et redimensionner chaque texture
+textures = {
+    TileType.DIRT: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/dirt.jpeg"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
+}
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+tiles = [] 
+for i in range(20):
+    tiles.append(Tile(i, 18, TileType.DIRT))
 while running:
+
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
@@ -20,6 +29,9 @@ while running:
     screen.fill("purple")
 
     pygame.draw.circle(screen, "red", player_pos, 40)
+
+    for row in tiles:
+        row.render(screen,textures)
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_z]:
