@@ -1,3 +1,8 @@
 Rapport/bin/
 .venv
+<<<<<<< HEAD
 .Ds_Store
+=======
+.DS_Store
+__pycache__/
+>>>>>>> mattheo
