@@ -1,82 +1,67 @@
 import pygame
 
-GRAVITY = 0.75
+GRAVITY = 1.2
 MAX_FALL_SPEED = 10
-JUMP_FORCE = 11
+JUMP_FORCE = 7
 GROUND_Y = 500  # À adapter selon ton terrain
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, scale, speed):
         super().__init__()
-
         self.image = pygame.image.load('Code/textures/Player/player.png')
-        self.image = pygame.transform.scale(
-            self.image,
-            (int(self.image.get_width() * scale), int(self.image.get_height() * scale))
-        )
-        self.rect = self.image.get_rect(center=(x, y))
-
+        self.image = pygame.transform.scale(self.image,(int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
+        self.rect = self.image.get_rect(x=x,y=y)
         self.speed = speed
-        self.vel_y = 0
+        self.velocity = [0,0]
         self.in_air = True
+        self.jumping =False
 
+
+    
+    def apply_gravity(self):
+        self.velocity[1] += GRAVITY
+        if self.velocity[1] > MAX_FALL_SPEED:
+            self.velocity[1] = MAX_FALL_SPEED
+    
     def jump(self):
         if not self.in_air:
-            self.vel_y = -JUMP_FORCE
+            self.velocity[1] = -JUMP_FORCE
+            self.apply_gravity()
             self.in_air = True
 
-    def apply_gravity(self):
-        self.vel_y += GRAVITY
-        if self.vel_y > MAX_FALL_SPEED:
-            self.vel_y = MAX_FALL_SPEED
+    def move(self, tiles):
+    # Mouvement horizontal
+        if self.jumping:
+            self.jump()
+            self.jumping=False
+        self.rect.x += self.velocity[0] * self.speed
+        for row in tiles:
+            for tile in row:
+                if tile.is_solid and self.rect.colliderect(tile.rect):
+                    if self.velocity[0] > 0:  # Va à droite
+                        self.rect.right = tile.rect.left
+                    elif self.velocity[0] < 0:  # Va à gauche
+                        self.rect.left = tile.rect.right
 
-    def move(self, moving_left, moving_right, terrain):
-        dx = 0
-        dy = 0
-
-        # Mouvement horizontal
-        if moving_left:
-            dx = -self.speed
-        if moving_right:
-            dx = self.speed
-
-
-        # Gravité
-        self.vel_y += GRAVITY
-        if self.vel_y > 10:
-            self.vel_y = 10
-        dy += self.vel_y
-
-
-        # --- COLLISIONS VERTICALES ---
-
-        for tiles in terrain:
-            for tile in tiles :
-                if not tile.is_solid:
-                    continue
-
-                tile_rect = pygame.Rect(
-                    tile.x * tile.TILE_SIZE,
-                    tile.y * tile.TILE_SIZE + tile.TILE_SIZE/4,
-                    tile.TILE_SIZE,
-                    tile.TILE_SIZE
-                )
-
-                # Collision horizontale
-                if tile_rect.colliderect(self.rect.x + dx, self.rect.y, self.rect.width, self.rect.height):
-                    dx = 0
-
-                # Collision verticale
-                if tile_rect.colliderect(self.rect.x, self.rect.y + dy, self.rect.width, self.rect.height):
-                    dy = 0
-                    self.in_air =False
-
-        # Mise à jour position
-        self.rect.x += dx
-        self.rect.y += dy
+        # Mouvement vertical
         
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        self.rect.y += self.velocity[1] * self.speed
+        for row in tiles:
+            for tile in row:
+                if tile.is_solid and self.rect.colliderect(tile.rect):
+                    if self.velocity[1] > 0:  # Tombe vers le bas
+                        self.rect.bottom = tile.rect.top
+                        self.in_air = False
+                    elif self.velocity[1] < 0:  # Monte
+                        self.rect.top = tile.rect.bottom
+                    self.velocity[1] = 0
+
+
+        
+    def draw(self, screen, camera_x, camera_y):
+        screen.blit(self.image, (self.rect.x - camera_x, self.rect.y - camera_y))
+        pygame.draw.rect(screen, (255, 0, 0), 
+                        pygame.Rect(self.rect.x - camera_x, self.rect.y - camera_y, self.rect.width, self.rect.height), 2)
 
 
     
