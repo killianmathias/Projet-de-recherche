@@ -6,3 +6,5 @@ class TileType(Enum):
     GRASS = 2
     STONE = 3
     COAL = 4
+    WATER =5
+    SAND = 6
