@@ -1,6 +1,6 @@
 from enum import Enum
 
-class TileType(Enum):
+class TileType(Enum): # Énumération des différents types de tuiles 
     AIR = 0
     DIRT = 1
     GRASS = 2
