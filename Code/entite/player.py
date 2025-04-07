@@ -1,24 +1,19 @@
 import pygame
+from .entity import Entity
 
 GRAVITY = 0.7
 
-class Player(pygame.sprite.Sprite):
+class Player(Entity):
     
     def __init__(self, x, y, scale, speed):
-        self.x = x
-        self.y = y
+        super().__init__(x, y, scale, 'Code/img/player.png')
         self.speed = speed
         self.jump = False
         self.vel_y = 0
         self.in_air = True
-        pygame.sprite.Sprite.__init__(self)
-        img = pygame.image.load('Code/img/player.png')
-        self.image = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.x, self.y)
         
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        super().draw(screen)
         
     def move(self, moving_left, moving_right):
         dx = 0
