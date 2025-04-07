@@ -11,7 +11,7 @@ class Game():
         self.clock = pygame.time.Clock()
         self.running = True
         
-        self.player = Player(200, 200, 0.1, 5, 0.7)
+        self.player = Player(200, -2000, 0.1, 5, 0.7)
 
         bloc = Bloc(600, 375, 50)
         self.blocs = pygame.sprite.Group()

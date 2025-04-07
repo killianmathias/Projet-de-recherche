@@ -32,17 +32,20 @@ class Player(Entity):
             self.jump = False
             self.in_air = True
             
-        self.vel_y += self.gravity
-        if self.vel_y > 10:
-            self.vel_y = 10
+        if self.in_air:
+            self.vel_y += self.gravity
+            if self.vel_y > 10:
+                self.vel_y = 10
         dy += self.vel_y
             
-            
         if self.rect.bottom + dy > 400:
-            dy = 500 - self.rect.bottom
+            dy = 400 - self.rect.bottom
             self.in_air = False
-            
+            self.vel_y = 0
 
-        print(self.vel_y)
+        for bloc in blocs:
+            if self.rect.colliderect(bloc.rect):
+                print('colision')
+
         self.rect.x += dx
         self.rect.y += dy
