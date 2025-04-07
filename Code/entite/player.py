@@ -1,6 +1,6 @@
 import pygame
 
-GRAVITY = 0.75
+GRAVITY = 0.7
 
 class Player(pygame.sprite.Sprite):
     
