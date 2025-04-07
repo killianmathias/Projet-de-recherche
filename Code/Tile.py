@@ -1,5 +1,5 @@
 import pygame
-from tileType import TileType
+from TileType import TileType
 
 class Tile(): # Classe Tuile
     TILE_SIZE = 32 # Taille d'une tuile
