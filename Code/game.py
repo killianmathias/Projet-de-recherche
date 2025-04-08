@@ -21,20 +21,15 @@ class Game:
                 if event.type == pygame.QUIT: # Si l'évènement est de quitter la fenêtre
                     self.running= False # On arrête le jeu
         keys = pygame.key.get_pressed() # Ensemble des touches pressées
-        if keys[pygame.K_LEFT]: # Si la touche est le bouton gauche
+        if keys[pygame.K_q]: # Si la touche est le bouton gauche
             self.player.velocity[0]=-1 # Le joueur se déplace à gauche
-        elif keys[pygame.K_RIGHT]: # Si la touche est le bouton droit
+        elif keys[pygame.K_d]: # Si la touche est le bouton droit
             self.player.velocity[0]=1 # Le joueur se déplace à droite
         else:
             self.player.velocity[0] =0 # Le joueur ne se déplace plus
 
         if keys[pygame.K_SPACE]: # Si la touche pressée est la touche espace
             self.player.jumping=True # Le joueur saute
-            
-        elif keys[pygame.K_DOWN]: # Si la touche est le bouton bas
-            self.player.velocity[1]=1 # Le joueur descend
-        else:
-            self.player.velocity[1]=0 # Sinon le joueur ne descend pas  
         
     def update(self): # Fonction qui gère la mise à jour des informations
         self.camera_x = self.player.rect.centerx - self.screen.get_width() // 2 # Coordonnées x de la caméra

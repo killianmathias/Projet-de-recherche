@@ -24,12 +24,10 @@ class Player(pygame.sprite.Sprite): # Classe du joueur
             self.velocity[1] = MAX_FALL_SPEED
     
     def jump(self): # Méthode qui permet au joueur de sauter
-        if not self.in_air:
-            self.velocity[1] = -JUMP_FORCE
-            self.apply_gravity()
-            self.in_air = True
+        self.velocity[1] = -JUMP_FORCE
+        self.in_air = True
 
-    def move(self, tiles): # Méthode qui permet au joueur de se déplacer 
+    def move(self, tiles):# Méthode qui permet au joueur de se déplacer 
         # Si le joueur n'est pas déjà en train de sauter alors on le fait sauter
         if self.jumping: 
             self.jump()
