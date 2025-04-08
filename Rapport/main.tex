@@ -1,9 +1,11 @@
 \documentclass{article}
 \usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage{url}
+\usepackage{subcaption}
 \usepackage[francais]{babel}
 
-\title{Projet de recherche}
+\title{Projet de recherche documentaire\\ \large Génération procédurale de décors}
 \author{Killian Mathias\\ Matthéo Girardclos}
 \date{January 2025}
 
@@ -31,6 +33,12 @@ Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont re
 
 Le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
 Le bruit Simplex a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
+\begin{wrapfigure}{r}{0.25\textwidth} % 'r' pour droite, largeur ajustée
+  \centering
+  \includegraphics[width=0.22\textwidth]{assets/Perlin_noise.jpg}
+  \caption{Bruit de Perlin à 2 dimensions}
+  \label{perlin}
+\end{wrapfigure}
 
 \subsection{Génération de biomes}
 
@@ -54,11 +62,46 @@ Comme nous avons pu le préciser lors des paragraphes précédents, la méthode 
 
 \section{Méthodologie}
 
+Nous avons vu ci-dessus les différents moyens d'appliquer la génération procédurale et les applications liées à ces moyens. Maintenant, nous devons définir une méthodologie afin de réaliser notre implémentation à partir des recherches effectuées.
+
+\subsection{Les outils utilisés}
+Afin de nous concentrer un maximum sur la recherche et l'application directe de la génération procédurale, nous avons choisi un langage que nous maîtrisons bien mais qui est bien documenté, Python. De plus, si nous voulons réaliser un jeu vidéo, nous ne pouvons pas le faire nativement et simplement, c'est pour cela que nous avons choisi le module Pygame, qui offre simplicité mais aussi une très bonne documentation, ce qui facilite l’appréhension de ce dernier.\par
+\begin{figure}[!h]
+  \centering
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/python_logo.png}
+    \caption{Logo Python}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/pygame_logo.png}
+    \caption{Logo Pygame}
+  \end{subfigure}
+  \caption{Logos des bibliothèques Python et Pygame}
+  \label{fig:logos}
+  
+\end{figure}
+Comme dit précédemment, nous connaissions déjà le langage python, nous n'avons donc pas eu beaucoup à apprendre. Cependant, le module Pygame était tout nouveau pour nous, nous nous sommes donc aidés de la documentation, de tutoriels sur YouTube mais aussi d'un livre \cite{prieur2019pygame}.\par
+
+Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un outil pour travailler et collaborer. Dans un premier temps, pour la communication nous avons utilisé Discord, qui est très pratique car on peut échanger via des messages, des appels audios, vidéos mais cet outil offre également la possibilité de partager son écran directement en appel. Le second outil de collaboration utilisé est Git avec Github afin de partager le code. C'est actuellement sur le marché le meilleur outil de versioning et de collaboration.
+
+\subsection{Organisation du code}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{assets/UML_class.png}
+  \caption{Diagramme de classe du Terraria-Like}
+  \label{UML_class}
+\end{figure}
 \section{Implémentation et Résultats}
 \label{Implémentation}
 \section{Conclusion et Perspectives}
 
 \section{Bibliographie et références}
+\bibliographystyle{alpha}
+\bibliography{bibliographie}
 \url{https://fr.wikipedia.org/wiki/Bruit_de_Perlin}\\
 \url{https://fr.minecraft.wiki/w/Génération_du_monde}\\
 \url{https://fr.wikipedia.org/wiki/Génération_procédurale}\\
