@@ -11,8 +11,10 @@ class Game:
          # Le joueur
         self.background =pygame.transform.scale(pygame.image.load("Code/textures/Background/1.png"), (1080*5,720*5)) # L'image de background (qui changera en fonction des biomes)
         self.world = World(1080,720) # Le monde généré avec des tuiles
-        self.player = Player(540*32,(len(self.world.terrain[540])+2)*32,0.05,5)
+        self.player = Player(540,400,0.05,5)
         self.group = pygame.sprite.Group()
+        self.ticks_count=0
+        
         for row in self.world.terrain:
             for tile in row:
                 self.group.add(tile)
@@ -37,7 +39,13 @@ class Game:
         
     def update(self): # Fonction qui gère la mise à jour des informations
         self.player.apply_gravity() # Appel de la fonction qui applique la gravité au joueur
-        self.player.move(self.world.terrain) # Déplacement du joueur sur le terrain
+        self.player.move(self.world.terrain)
+        if (self.player.jumping):
+            self.player.jump()
+            self.player.jumping=False
+        self.player.update_animation() # Déplacement du joueur sur le terrain
+
+
 
     def display(self): # Fonction qui gère l'affichage
         self.screen.fill("black") # Remplir le fond en noir
@@ -52,6 +60,10 @@ class Game:
             self.handling_events()
             self.update()
             self.display()
+            self.ticks_count+=1
+            if self.ticks_count%30==0:
+                self.ticks_count=0
+                self.player.can_jump=True
             self.clock.tick(60) # Limite les FPS à 60
                 
 

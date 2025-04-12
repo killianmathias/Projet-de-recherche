@@ -57,9 +57,9 @@ class World():
         tiles = [] # Initialisation de notre grille de tuiles
         for i in range(self.width): # On parcours la largeur
             row = []  # Créer une nouvelle ligne pour chaque i
-            for j in range(self.height+15): # On parcours la hauteur et on rajoute 15 de hauteur afin qu'il y ait au minimum 15 blocs sous le joueur
-                if (j<(grid[i]+15)): # Si la valeur de j est inférieure à la valeur générée par Perlin 
-                    if (j+1==(grid[i]+15)): # Si la prochaine valeur est la valeur générée par Perlin +15 alors on affiche de l'herbe
+            for j in range(self.height): # On parcours la hauteur et on rajoute 15 de hauteur afin qu'il y ait au minimum 15 blocs sous le joueur
+                if (j<(grid[i])): # Si la valeur de j est inférieure à la valeur générée par Perlin 
+                    if (j+1==(grid[i])): # Si la prochaine valeur est la valeur générée par Perlin +15 alors on affiche de l'herbe
                         row.append(Grass(i*32,(self.height+1-j)*32));
                     else:
                         row.append(Dirt(i*32, (self.height+1-j)*32)) # Sinon on affiche de la terre
@@ -73,6 +73,6 @@ class World():
     
     def draw(self, screen): # Fonction qui affiche la grille de tuiles
         for x in range(self.width):
-            for y in range(self.height+15):
+            for y in range(self.height):
                 tile = self.terrain[x][y] # On récupère la tuile à la position [x][y]
                 tile.draw(screen) # On appelle la fonction draw de chaque tuile
