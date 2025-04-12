@@ -8,11 +8,15 @@ class Game:
         self.screen = screen # L'écran sur lequel le jeu est affiché
         self.running = True #Si le jeu est en train de tourner
         self.clock = pygame.time.Clock() # Une horloge qui servira à limiter le nombre de frames par seconde
-        self.player = Player(500,20,0.05,5) # Le joueur
+         # Le joueur
         self.background =pygame.transform.scale(pygame.image.load("Code/textures/Background/1.png"), (1080*5,720*5)) # L'image de background (qui changera en fonction des biomes)
         self.world = World(1080,720) # Le monde généré avec des tuiles
-        self.camera_x = 0 # La position x de la caméra
-        self.camera_y = 0 # La position y de la caméra
+        self.player = Player(540*32,(len(self.world.terrain[540])+2)*32,0.05,5)
+        self.group = pygame.sprite.Group()
+        for row in self.world.terrain:
+            for tile in row:
+                self.group.add(tile)
+        
 
 
     def handling_events(self): # Fonction qui gère les évènements
@@ -32,17 +36,14 @@ class Game:
             self.player.jumping=True # Le joueur saute
         
     def update(self): # Fonction qui gère la mise à jour des informations
-        self.camera_x = self.player.rect.centerx - self.screen.get_width() // 2 # Coordonnées x de la caméra
-        self.camera_y = self.player.rect.centery - self.screen.get_height() // 2 # Coordonnées y de la caméra
         self.player.apply_gravity() # Appel de la fonction qui applique la gravité au joueur
         self.player.move(self.world.terrain) # Déplacement du joueur sur le terrain
 
     def display(self): # Fonction qui gère l'affichage
         self.screen.fill("black") # Remplir le fond en noir
-        background_scroll = int(self.player.rect.x / 4)  # Ajuster la vitesse du fond
-        screen.blit(self.background, (-background_scroll, 0))  # optionnel si background scrolling
-        self.world.draw(self.screen, self.camera_x, self.camera_y) # Dessiner le monde avec ses tuiles
-        self.player.draw(self.screen, self.camera_x, self.camera_y) # Dessiner le joueur
+        screen.blit(self.background,(0,0)) # Background
+        self.world.draw(self.screen) # Dessiner le monde avec ses tuiles
+        self.player.draw(self.screen) # Dessiner le joueur
         pygame.display.flip() # Mise à jour des informations sur l'écran
 
     def run(self): # Fonction principale qui fait tourner le jeu

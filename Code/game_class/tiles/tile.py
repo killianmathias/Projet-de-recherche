@@ -1,0 +1,16 @@
+import pygame
+class Tile(pygame.sprite.Sprite): # Classe Tuile
+    TILE_SIZE = 32 # Taille d'une tuile
+    
+    def __init__(self,x:int,y:int):
+        super().__init__() # On appelle le constructeur de la classe Sprite
+        self.rect = pygame.Rect(x,y,self.TILE_SIZE,self.TILE_SIZE) # Le rect définit pour la tuile
+        self.type = type # Le type de tuile définit par la classe TileType
+        self.is_solid = False
+        self.texture = None
+
+    def draw(self, screen): # Fonction qui dessine une tuile
+         # On récupère la texture associée au type de la tuile 
+        screen.blit(self.texture, self.rect) # On rajoute sur l'écran notre Tuile
+        
+    

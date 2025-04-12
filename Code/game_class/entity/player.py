@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite): # Classe du joueur
         if self.jumping: 
             self.jump()
             self.jumping=False
-        # Mouvement horizontal
+        #Mouvement horizontal
         self.rect.x += self.velocity[0] * self.speed
         for row in tiles:
             for tile in row:
@@ -55,9 +55,16 @@ class Player(pygame.sprite.Sprite): # Classe du joueur
                     self.velocity[1] = 0
 
 
+         # On déplace le joueur horizontalement
+            
+        # Vérifier les collisions verticales
         
-    def draw(self, screen, camera_x, camera_y): # Fonction qui dessine le joueur
-        screen.blit(self.image, (self.rect.x - camera_x, self.rect.y - camera_y)) # On affiche le joueur au centre de l'écran
+        # Limiter le mouvement horizontal
+    
+
+        
+    def draw(self, screen): # Fonction qui dessine le joueur
+        screen.blit(self.image, (self.rect.x, self.rect.y)) # On affiche le joueur au centre de l'écran
         # pygame.draw.rect(screen, (255, 0, 0), 
         #                 pygame.Rect(self.rect.x - camera_x, self.rect.y - camera_y, self.rect.width, self.rect.height), 2)
 

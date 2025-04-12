@@ -1,8 +1,12 @@
 import random
 import numpy as np
-from tileType import TileType
-from tile import Tile
 import pygame
+from tiles.tile import Tile
+from tiles.stone import Stone
+
+from tiles.dirt import Dirt
+from tiles.air import Air
+from tiles.grass import Grass
 
 @staticmethod 
 def grille_aleatoire(width,height): # Méthode statique qui gènère une grille avec le bruit de Perlin
@@ -45,14 +49,8 @@ class World():
         self.width = width # Nombre de tuiles de large
         self.height = height//32 # Nombre de tuiles de hauteur / Taille d'une tuile
         self.terrain = self.generate() # Le terrain généré
-        self.textures = {TileType.DIRT: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/dirt.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-    TileType.AIR: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/air.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-    TileType.GRASS: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/grass.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-    TileType.COAL: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/coal.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-    TileType.STONE: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/stone.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-    TileType.SAND: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/sand.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-    TileType.WATER: pygame.transform.scale(pygame.image.load("Code/textures/Tiles/water.png"), (Tile.TILE_SIZE, Tile.TILE_SIZE)),
-} # Ensemble des textures de chaque tuile
+        
+ # Ensemble des textures de chaque tuile
         
     def generate(self): # Fonction qui génère le terrain
         grid = grille_aleatoire(self.width, self.height) # On génère notre tableau de hauteur 
@@ -62,19 +60,19 @@ class World():
             for j in range(self.height+15): # On parcours la hauteur et on rajoute 15 de hauteur afin qu'il y ait au minimum 15 blocs sous le joueur
                 if (j<(grid[i]+15)): # Si la valeur de j est inférieure à la valeur générée par Perlin 
                     if (j+1==(grid[i]+15)): # Si la prochaine valeur est la valeur générée par Perlin +15 alors on affiche de l'herbe
-                        row.append(Tile(i*32,(self.height+1-j)*32,TileType.GRASS))
+                        row.append(Grass(i*32,(self.height+1-j)*32));
                     else:
-                        row.append(Tile(i*32, (self.height+1-j)*32, TileType.DIRT)) # Sinon on affiche de la terre
+                        row.append(Dirt(i*32, (self.height+1-j)*32)) # Sinon on affiche de la terre
                 else:
-                    row.append(Tile(i*32,(self.height-j)*32,TileType.AIR))  # Sinon on affiche de l'air
+                    row.append(Air(i*32,(self.height-j)*32))  # Sinon on affiche de l'air
             tiles.append(row)  # Ajouter la ligne à tiles 
         return tiles # On retourne notre grille de tuiles
 
         
 
     
-    def draw(self, screen, camera_x, camera_y): # Fonction qui affiche la grille de tuiles
+    def draw(self, screen): # Fonction qui affiche la grille de tuiles
         for x in range(self.width):
             for y in range(self.height+15):
                 tile = self.terrain[x][y] # On récupère la tuile à la position [x][y]
-                tile.draw(screen, self.textures, camera_x, camera_y) # On appelle la fonction draw de chaque tuile
+                tile.draw(screen) # On appelle la fonction draw de chaque tuile
