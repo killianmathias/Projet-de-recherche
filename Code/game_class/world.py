@@ -60,9 +60,22 @@ class World():
             for j in range(self.height): # On parcours la hauteur et on rajoute 15 de hauteur afin qu'il y ait au minimum 15 blocs sous le joueur
                 if (j<(grid[i])): # Si la valeur de j est inférieure à la valeur générée par Perlin 
                     if (j+1==(grid[i])): # Si la prochaine valeur est la valeur générée par Perlin +15 alors on affiche de l'herbe
-                        row.append(Grass(i*32,(self.height+1-j)*32));
+                        if (i>0 and grid[i-1]<grid[i]):
+                            row.append(Grass(i*32,(self.height+1-j)*32,'corner-left'))
+                        elif (i< len(grid) -1 and grid[i+1]<grid[i]):
+                            row.append(Grass(i*32,(self.height+1-j)*32,'corner-right'))
+                        else:
+                            row.append(Grass(i*32,(self.height+1-j)*32,'base'))
                     else:
-                        row.append(Dirt(i*32, (self.height+1-j)*32)) # Sinon on affiche de la terre
+                        if ((j+2)==(grid[i])):
+                            if (i>0 and grid[i-1]<grid[i]):
+                                row.append(Dirt(i*32,(self.height+1-j)*32,'corner-left'))
+                            elif (i< len(grid)-1 and grid[i+1]<grid[i]):
+                                row.append(Dirt(i*32,(self.height+1-j)*32,'corner-right'))
+                            else:
+                                row.append(Dirt(i*32,(self.height+1-j)*32,'base'))
+                        else:
+                            row.append(Dirt(i*32,(self.height+1-j)*32,'base'))
                 else:
                     row.append(Air(i*32,(self.height-j)*32))  # Sinon on affiche de l'air
             tiles.append(row)  # Ajouter la ligne à tiles 

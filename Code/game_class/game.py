@@ -68,7 +68,9 @@ class Game:
                 
 
 pygame.init() # Initialiser la bibliothèque pygame
-screen = pygame.display.set_mode((1080,720)) # Initialiser l'écran
+screen = pygame.display.set_mode((1080,720))# Initialiser l'écran
+pygame.display.set_caption("Terraria") 
+pygame.display.set_icon(pygame.image.load("Code/textures/icon.png")) # On met une icône
 game = Game(screen) # Initialisation d'une instance de la classe Game
 game.run() # Mise en route du jeu
 pygame.quit() # On libère tout
