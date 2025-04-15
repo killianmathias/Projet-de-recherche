@@ -4,6 +4,10 @@
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{subcaption}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
 \usepackage[francais]{babel}
 
 \title{Projet de recherche documentaire\\ \large Génération procédurale de décors}
@@ -32,8 +36,8 @@ Tout d'abord afin de répondre à nos besoins nous devons créer des paysages av
 
 Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin et le bruit Simplex.
 
-Le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
-Le bruit Simplex a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
+D'après la page Wikipédia \cite{perlin}, le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
+Le bruit Simplex \cite{simplex_noise} a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
 \begin{wrapfigure}{r}{0.25\textwidth} % 'r' pour droite, largeur ajustée
   \centering
   \includegraphics[width=0.22\textwidth]{assets/Perlin_noise.jpg}
@@ -44,16 +48,16 @@ Le bruit Simplex a également été créé par Ken Perlin en 2001 avec le but de
 \subsection{Génération de biomes}
 
 Après la génération de nos terrains, nous prévoyons d'implémenter un système de biomes. Chaque biome, représentant une zone particulière du terrain, aura ses propres caractéristiques visuelles, avec des blocs dont les textures varieront selon le biome où ils se trouvent. Pour ce faire, il existe deux approches qui sont respectivement le Bruit Worley (ou Voronoï) et définir une carte avec des températures et une humidité.\par
-La première approche a été créée par Steven Worley en 1996, et possède trois noms : le Bruit de Worley, le bruit de Voronoï et le bruit Cellulaire. Cette approche se base sur le diagramme de Voronoï, qui est un découpage d'un plan sous forme de cellules. Dans notre cas, cette méthode n'est pas forcément pertinente car elle est plus efficace sur un plan plutôt qu'en deux dimensions comme nous et les transitions entre les biomes seraient trop brutales.\par
+La première approche a été créée par Steven Worley en 1996, et possède trois noms : le Bruit de Worley \cite{worley_noise}, le bruit de Voronoï et le bruit Cellulaire. Cette approche se base sur le diagramme de Voronoï \cite{voronoi_diagram}, qui est un découpage d'un plan sous forme de cellules. Dans notre cas, cette méthode n'est pas forcément pertinente car elle est plus efficace sur un plan plutôt qu'en deux dimensions comme nous et les transitions entre les biomes seraient trop brutales.\par
 La seconde approche serait donc optimale car on pourrait réutiliser les algorithmes pour la génération de terrains directement pour les biomes. En effet, le Bruit de Perlin, en plus de générer les terrains, peut également nous permettre de définir une humidité ainsi qu'une température pour chaque bloc, ce qui nous permettra d'avoir de meilleures transitions entre les biomes et permettre une expérience plus agréable au joueur. On s'orientera donc vers cette approche-là car elle correspond plus à nos besoins. 
 
 \subsection{Génération de grottes et de cavernes}
-Une fois notre terrain et nos biomes générés, afin de notre implémentation se rapproche le plus de Terraria, il faut générer des cavernes et des grottes souterraines. Il existe également deux approches différentes pour concevoir cela qui sont le Random Walk (ou Marche Aléatoire) et une méthode qui utilise des automates cellulaires.\par
+Une fois notre terrain et nos biomes générés, afin de notre implémentation se rapproche le plus de Terraria, il faut générer des cavernes et des grottes souterraines. Il existe également deux approches différentes pour concevoir cela qui sont le Random Walk \cite{random_walk} (ou Marche Aléatoire) et une méthode qui utilise des automates cellulaires \cite{automate_cellulaire}.\par
 La première méthode est un modèle mathématique qui permet de créer des donjons ainsi que des réseaux de tunnels. Nous nous focaliserons pas sur cette méthode car elle n'est pas utilisée par Terraria et que cela s'éloigne de la génération procédurale.\par 
 La seconde méthode, utilisée par Terraria mais également par le jeu de la vie, consiste en une grille régulière de cellule, et une cellule évolue en fonction de ses voisines ce qui permet de générer des grottes réalistes.
 
 \subsection{Génération de minerais et ressources}
-Maintenant que les grottes sont générées, il faudrait que le joueur puisse récolter des ressources. Nous n'irons pas aussi loin dans l'implémentation cependant nous générerons quand même des minerais. Il existe différentes méthodes qui permettent cela et qui sont la distribution par couches (ou Stratification) et le Bruit de Perlin appliqué au minerais. \par
+Maintenant que les grottes sont générées, il faudrait que le joueur puisse récolter des ressources. Nous n'irons pas aussi loin dans l'implémentation cependant nous générerons quand même des minerais. Il existe différentes méthodes qui permettent cela et qui sont la distribution par couches (ou Stratification \cite{stratification}) et le Bruit de Perlin appliqué au minerais. \par
 La première méthode est utilisée par Minecraft en combinaison avec le Bruit de Perlin, la seconde se combine avec la génération de terrain et donc nous utiliserons cette méthode car c'est également celle utilisée par Terraria. Nous verrons plus en détail comment nous l'utiliserons pour notre implémentation à la section \ref{Implémentation}.
 
 
@@ -130,17 +134,32 @@ Maintenant que nous avons définit comment nous allions aborder ce projet ambiti
 \label{Implémentation}
 
 Avant même de commencer à avoir un terrain qui se génère procéduralement, il a déjà fallut instaurer les bases de notre implémentation.
+
+\subsection{Bases du jeu}
+  Tout d'abord, nous avons dû créer une fenêtre de jeu avec Pygame, puis définir la taille de la fenêtre. Ensuite, nous avons dû créer une boucle principale qui va gérer les événements du jeu, l'affichage et le rafraîchissement de l'écran avec trois méthodes qui sont respectivement \textbf{handling\_events}, \textbf{display} et \textbf{update}. Nous avons également dû définir un nombre de FPS (Images par secondes) afin d'avoir un affichage fluide et pas trop exigeant en ressources.\par
+Une fois l'étape précédente réalisé, nous avons implémenté le joueur grâce à la classe Player. Ce dernier est défini par une boîte de collision, nommée \textbf{rect}, et une texture. Il peut se déplacer dans les quatre directions bien que le déplacement vers le bas corresponde à la gravité et le déplacement vers le haut à un saut.\par
+\subsection{Génération procédurale du terrain}
+La base de notre jeu est maintenant instaurée, avec un personnage qui peut se déplacer dans la fenêtre. Cependant, nous n'avons pas encore de décor, ni de monde. C'est ici que va intervenir la génération procédurale.\par
+Afin de bien comprendre comment nous nous y sommes pris dans un premier temps pour générer un terrain avec du relief, nous allons expliquer le fonctionnement du Bruit de Perlin à une dimension. Tout d'abord, nous avons définit un tableau de valeurs aléatoires entre -1 et 1.\par
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+  \hline
+  0.42 & -0.87 & 0.15 & -0.33 & 0.98\\
+  \hline
+  \end{tabular}
+  \caption{Exemple de tableau de valeurs aléatoires avec x égal à 5}
+  \label{tableau_aleatoire}
+  \end{table}
+  Une fois que nous avons obtenu notre tableau de valeurs, nous allons le lisser plusieurs fois à l’aide d’un algorithme. L’objectif est que, après avoir multiplié ces valeurs par une hauteur maximale (appelée valeur de y maximum), la différence entre deux valeurs voisines soit au maximum de 1. Cela permet d’obtenir une transition douce et progressive entre les valeurs, sans saut brusque. Ce processus va donc nous permettre d'avoir un terrain avec du relief réaliste. Dans un premier temps, on choisit que la tuile la plus haute sur chaque colonne est un bloc d'herbe et les tuiles en dessous de la Terre. Par défaut, le reste des tuiles sont de l'air.\par
+\subsection{Collisions}
+  Notre terrain est maintenant opérationnel et le joueur peut donc se déplacer dessus à une exception près, les collisions. En effet, bien que notre personnage puisse se déplacer, il peut passer à travers le terrain et les tuiles générées. Comme le joueur, les tuiles sont aussi définies par un \textbf{rect}. Nous avons donc utilisé la méthode \textbf{collide\_rect} de Pygame qui va détecter les collisions entre le joueur et les tuiles (sauf les tuiles de type air) grâce à leurs \textbf{rect}. Ensuite, il suffit juste de dire que le joueur ne peut pas se déplacer dans la direction de la collision et notre personnage pourra se mouvoir sur le terrain sans passer à travers. \par
+
+  \subsection{Génération procédurale des biomes}
 \section{Conclusion et Perspectives}
 
 \section{Bibliographie et références}
 \bibliographystyle{alpha}
 \bibliography{bibliography}
-\url{https://fr.wikipedia.org/wiki/Bruit_de_Perlin}\\
-\url{https://fr.minecraft.wiki/w/Génération_du_monde}\\
-\url{https://fr.wikipedia.org/wiki/Génération_procédurale}\\
-\url{https://thebookofshaders.com/11/?lan=fr}\\
-\url{https://en.wikipedia.org/wiki/Simplex_noise}\\
-\url{https://en.wikipedia.org/wiki/Worley_noise}\\
-\url{https://fr.wikipedia.org/wiki/Diagramme_de_Voronoï}\\
-\url{https://youtu.be/Pgt82G4Jxac?si=B0K4jVE-ph3O6beT}
+
 \end{document}
