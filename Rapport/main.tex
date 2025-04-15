@@ -80,28 +80,58 @@ Afin de nous concentrer un maximum sur la recherche et l'application directe de 
     \caption{Logo Pygame}
   \end{subfigure}
   \caption{Logos des bibliothèques Python et Pygame}
-  \label{fig:logos}
+  \label{fig:logos_python}
   
 \end{figure}
 Comme dit précédemment, nous connaissions déjà le langage python, nous n'avons donc pas eu beaucoup à apprendre. Cependant, le module Pygame était tout nouveau pour nous, nous nous sommes donc aidés de la documentation, de tutoriels sur YouTube mais aussi d'un livre \cite{prieur2019pygame}.\par
 
-Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un outil pour travailler et collaborer. Dans un premier temps, pour la communication nous avons utilisé Discord, qui est très pratique car on peut échanger via des messages, des appels audios, vidéos mais cet outil offre également la possibilité de partager son écran directement en appel. Le second outil de collaboration utilisé est Git avec Github afin de partager le code. C'est actuellement sur le marché le meilleur outil de versioning et de collaboration.
+Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un outil pour travailler et collaborer. Dans un premier temps, pour la communication nous avons utilisé Discord, qui est très pratique car on peut échanger via des messages, des appels audios, vidéos mais cet outil offre également la possibilité de partager son écran directement en appel. Le second outil de collaboration utilisé est Git avec Github afin de partager le code. C'est actuellement sur le marché le meilleur outil de versioning et de collaboration. De plus, afin d'adopter une méthode agile et travailler sans se répeter, nous avons utilisés l'outil Jira. Il permet de créer des tickets qui correspondent à des tâches à effectués, puis de définir des périodes de Sprint, période où l'on effectue un ensemble de tickets.\cite{cochoy2011perlin}
+
+\begin{figure}[!h]
+  \centering
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=0.5\textwidth]{assets/discord.png}
+    \caption{Logo Discord}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=0.6\textwidth]{assets/git.png}
+    \caption{Logo Git}
+  \end{subfigure}
+  \hspace{0.6cm}
+  \begin{subfigure}[b]{0.2\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/jira.png}
+    \caption{Logo Jira}
+  \end{subfigure}
+  \caption{Logos des outils de communication et de collaboration}
+  \label{fig:logos_collab}
+  
+\end{figure}
 
 \subsection{Organisation du code}
-
+Pour avoir un code propre, et pour faciliter la compréhension entre nous, nous avons décidé au préalable d'une organisation et d'une structure de base. Le but était de créer un squelette de code qui nous permettrait de nous y retrouver facilement. Nous avons donc décidé de créer plusieurs fichiers, un pour chaque classe implémentée, chacun ayant une fonction précise. Nous avons pour cela créé un diagramme UML de classes que nous pouvons voir à la figure \ref{UML_class}.\par
+Nous avons tout d'abord une classe Tile qui hérite de pygame.Sprite du module Pygame car elle propose des méthodes pour gérer les collisions de manière optimale avec les tuiles, et ses sous classes qui sont les différents types de blocs que l'on peut trouver dans le jeu. Ces blocs seront générés un à un procéduralement et seront destructibles, d'où l'utilité des les définir un à un.\par
+Ensuite, nous avons la classe World qui va être la classe responsable de la génération du monde de manière procédurale. Elle va notamment avoir pour attribut une matrice de Tuiles car notre jeu est dans un espace à deux dimensions.\par
+Puis, nous avons la classe Player qui va gérer le joueur, ses déplacements, ses interactions avec le monde et les blocs. Cette classe va hériter de classe pygame.Sprite.\par
+Enfin, la classe Game qui va être la classe principale du jeu, elle va gérer la boucle principale du jeu, les événements, l'affichage et le rafraîchissement de l'écran.\par
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\textwidth]{assets/UML_class.png}
   \caption{Diagramme de classe du Terraria-Like}
   \label{UML_class}
 \end{figure}
+
+Maintenant que nous avons définit comment nous allions aborder ce projet ambitieux, nous allons voir comment nous avons implémenté notre reproduction de Terraria.
 \section{Implémentation et Résultats}
 \label{Implémentation}
 \section{Conclusion et Perspectives}
 
 \section{Bibliographie et références}
 \bibliographystyle{alpha}
-\bibliography{bibliographie}
+\bibliography{bibliography}
 \url{https://fr.wikipedia.org/wiki/Bruit_de_Perlin}\\
 \url{https://fr.minecraft.wiki/w/Génération_du_monde}\\
 \url{https://fr.wikipedia.org/wiki/Génération_procédurale}\\

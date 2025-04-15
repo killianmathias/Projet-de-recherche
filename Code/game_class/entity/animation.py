@@ -9,6 +9,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.current_image = 0
         self.images = animations.get(sprite_name)
         self.animation = False
+        self.counter = 0
 
     def start_animation(self):
         self.animation = True
@@ -17,8 +18,10 @@ class AnimateSprite(pygame.sprite.Sprite):
     def animate(self):
         
         if self.animation:
-            
-            self.current_image += 1
+            self.counter+=1
+            if (self.counter == 2):
+                self.current_image += 1
+                self.counter = 0
             
 
             if self.current_image >= len(self.images):
