@@ -70,4 +70,6 @@ class World():
         for x in range(self.width):
             for y in range(self.height+15):
                 tile = self.terrain[x][y] # On récupère la tuile à la position [x][y]
-                tile.draw(screen, camera) # On appelle la fonction draw de chaque tuile
+                tile.can_tuch = False
+                if camera.rect.colliderect(tile.rect):
+                    tile.draw(screen, camera) # On appelle la fonction draw de chaque tuile

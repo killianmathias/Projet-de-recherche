@@ -62,6 +62,7 @@ class Game:
 
 pygame.init() # Initialiser la bibliothèque pygame
 screen = pygame.display.set_mode((1080,720)) # Initialiser l'écran
+screen.get_height()
 game = Game(screen) # Initialisation d'une instance de la classe Game
 game.run() # Mise en route du jeu
 pygame.quit() # On libère tout
