@@ -1,5 +1,5 @@
 import pygame
-from tiles.tile import Tile
+from .tile import Tile
 
 class Grass(Tile):
     def __init__(self, x, y):

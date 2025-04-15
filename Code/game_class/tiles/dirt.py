@@ -1,5 +1,5 @@
-from tiles.tile import Tile
 import pygame
+from .tile import Tile
 
 class Dirt(Tile):
     def __init__(self, x, y):

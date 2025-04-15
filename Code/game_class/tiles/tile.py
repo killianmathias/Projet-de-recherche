@@ -1,4 +1,5 @@
 import pygame
+
 class Tile(pygame.sprite.Sprite): # Classe Tuile
     TILE_SIZE = 32 # Taille d'une tuile
     
@@ -9,8 +10,10 @@ class Tile(pygame.sprite.Sprite): # Classe Tuile
         self.is_solid = False
         self.texture = None
 
-    def draw(self, screen): # Fonction qui dessine une tuile
+    def draw(self, screen, camera): # Fonction qui dessine une tuile
          # On récupère la texture associée au type de la tuile 
-        screen.blit(self.texture, self.rect) # On rajoute sur l'écran notre Tuile
+        x_tile , y_tile = self.rect.topleft
+        x_cam, y_cam = camera.rect.topleft
+        screen.blit(self.texture, (x_tile - x_cam, y_tile - y_cam)) # On rajoute sur l'écran notre Tuile
         
     

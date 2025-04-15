@@ -1,5 +1,5 @@
 import pygame
-from entity import Player
+from entity import *
 from world import *
 
 
@@ -11,7 +11,9 @@ class Game:
          # Le joueur
         self.background =pygame.transform.scale(pygame.image.load("Code/textures/Background/1.png"), (1080*5,720*5)) # L'image de background (qui changera en fonction des biomes)
         self.world = World(1080,720) # Le monde généré avec des tuiles
-        self.player = Player(540*32,(len(self.world.terrain[540])+2)*32,0.05,5)
+        self.player = Player(0, 0 ,0.05,5)
+        x_cam, y_cam = self.player.rect.center
+        self.camera = Camera(x_cam, y_cam, 1080, 720)
         self.group = pygame.sprite.Group()
         for row in self.world.terrain:
             for tile in row:
@@ -38,12 +40,13 @@ class Game:
     def update(self): # Fonction qui gère la mise à jour des informations
         self.player.apply_gravity() # Appel de la fonction qui applique la gravité au joueur
         self.player.move(self.world.terrain) # Déplacement du joueur sur le terrain
+        self.camera.update(self.player.rect.center)
 
     def display(self): # Fonction qui gère l'affichage
         self.screen.fill("black") # Remplir le fond en noir
         screen.blit(self.background,(0,0)) # Background
-        self.world.draw(self.screen) # Dessiner le monde avec ses tuiles
-        self.player.draw(self.screen) # Dessiner le joueur
+        self.world.draw(self.screen, self.camera) # Dessiner le monde avec ses tuiles
+        self.player.draw(self.screen, self.camera) # Dessiner le joueur
         pygame.display.flip() # Mise à jour des informations sur l'écran
 
     def run(self): # Fonction principale qui fait tourner le jeu

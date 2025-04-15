@@ -1,12 +1,7 @@
 import random
 import numpy as np
 import pygame
-from tiles.tile import Tile
-from tiles.stone import Stone
-
-from tiles.dirt import Dirt
-from tiles.air import Air
-from tiles.grass import Grass
+from tiles import *
 
 @staticmethod 
 def grille_aleatoire(width,height): # Méthode statique qui gènère une grille avec le bruit de Perlin
@@ -71,8 +66,8 @@ class World():
         
 
     
-    def draw(self, screen): # Fonction qui affiche la grille de tuiles
+    def draw(self, screen, camera): # Fonction qui affiche la grille de tuiles
         for x in range(self.width):
             for y in range(self.height+15):
                 tile = self.terrain[x][y] # On récupère la tuile à la position [x][y]
-                tile.draw(screen) # On appelle la fonction draw de chaque tuile
+                tile.draw(screen, camera) # On appelle la fonction draw de chaque tuile

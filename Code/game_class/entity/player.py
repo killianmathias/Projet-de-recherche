@@ -8,8 +8,8 @@ GROUND_Y = 500  # À adapter selon ton terrain
 class Player(pygame.sprite.Sprite): # Classe du joueur
     def __init__(self, x, y, scale, speed):
         super().__init__() # On appelle le constructeur parent donc de Sprite
-        self.image = pygame.image.load('Code/textures/Player/player.png') # On définit l'image de notre joueur
-        self.image = pygame.transform.scale(self.image,(int(self.image.get_width() * scale), int(self.image.get_height() * scale))) # On adapte la taille de l'image
+        img = pygame.image.load('Code/textures/Player/player.png') # On définit l'image de notre joueur
+        self.image = pygame.transform.scale(img,(int(img.get_width() * scale), int(img.get_height() * scale))) # On adapte la taille de l'image
         self.rect = self.image.get_rect(x=x,y=y) # On définit le Rect associé au joueur 
         self.speed = speed # On définit une vitesse au joueur
         self.velocity = [0,0] # Un tableau de velocité pour une valeur horizontale et une valeur verticale
@@ -63,10 +63,10 @@ class Player(pygame.sprite.Sprite): # Classe du joueur
     
 
         
-    def draw(self, screen): # Fonction qui dessine le joueur
-        screen.blit(self.image, (self.rect.x, self.rect.y)) # On affiche le joueur au centre de l'écran
+    def draw(self, screen, camera): # Fonction qui dessine le joueur
+        x_player , y_player = self.rect.topleft
+        x_cam, y_cam = camera.rect.topleft
+        screen.blit(self.image, (x_player - x_cam, y_player - y_cam)) # On affiche le joueur au centre de l'écran
         # pygame.draw.rect(screen, (255, 0, 0), 
         #                 pygame.Rect(self.rect.x - camera_x, self.rect.y - camera_y, self.rect.width, self.rect.height), 2)
 
-
-    
