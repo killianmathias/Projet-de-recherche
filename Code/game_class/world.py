@@ -17,7 +17,6 @@ def grille_aleatoire(width,height): # Méthode statique qui gènère une grille 
 
 
 gradients = [random.random() * 2 - 1 for _ in range(1000)] # Tableau de gradients entre -1 et 1
-print(gradients)
 def fade(t): # Fonction de fade qui adoucit le bruit de Perlin pour avoir des écarts de valeur de 1 maximum
     return t ** 3 * (t * (t * 6 - 15) + 10) # Formule mathématique de fade
 
