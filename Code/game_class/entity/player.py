@@ -26,14 +26,14 @@ class Player(pygame.sprite.Sprite): # Classe du joueur
         
         key = pygame.key.get_pressed()
         if key[pygame.K_SPACE] and self.in_air == False:
-            self.vel_y = -11
+            self.vel_y = -11 
             self.in_air = True
         if key[pygame.K_q]:
             dx -= self.speed
         if key[pygame.K_d]:
             dx += self.speed
             
-        self.vel_y += self.gravity
+        self.vel_y += self.gravity 
         if self.vel_y > 30:
             self.vel_y = 30
         dy += self.vel_y

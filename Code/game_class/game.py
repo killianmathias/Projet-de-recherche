@@ -1,4 +1,4 @@
-import pygame
+import pygame, time
 from entity import *
 from world import *
 
@@ -8,12 +8,13 @@ class Game:
         self.screen = screen # L'écran sur lequel le jeu est affiché
         self.running = True #Si le jeu est en train de tourner
         self.clock = pygame.time.Clock() # Une horloge qui servira à limiter le nombre de frames par seconde
+        self.dt = 0
          # Le joueur
         self.background =pygame.transform.scale(pygame.image.load("Code/textures/Background/1.png"), (1080*5,720*5)) # L'image de background (qui changera en fonction des biomes)
         self.world = World(1080,720) # Le monde généré avec des tuiles
-        self.player = Player(0, 0 ,0.05,5)
+        self.player = Player(0, 0 ,0.05,3)
         x_cam, y_cam = self.player.rect.center
-        self.camera = Camera(x_cam, y_cam, 1080, 720)
+        self.camera = Camera(x_cam, y_cam, 1090, 730)
         self.group = pygame.sprite.Group()
         self.fly = False
         for row in self.world.terrain:
@@ -58,6 +59,7 @@ class Game:
             self.update()
             self.draw()
             self.clock.tick(60) # Limite les FPS à 60
+            
                 
 
 pygame.init() # Initialiser la bibliothèque pygame
