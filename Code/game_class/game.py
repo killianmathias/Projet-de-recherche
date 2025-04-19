@@ -1,4 +1,4 @@
-import pygame, time
+import random
 from entity import *
 from world import *
 
@@ -11,17 +11,40 @@ class Game:
         self.dt = 0
          # Le joueur
         self.background =pygame.transform.scale(pygame.image.load("Code/textures/Background/1.png"), (1080*5,720*5)) # L'image de background (qui changera en fonction des biomes)
-        self.world = World(1080,720) # Le monde généré avec des tuiles
+        self.world = None
         self.player = Player(0, 0 ,0.05,3)
         x_cam, y_cam = self.player.rect.center
         self.camera = Camera(x_cam, y_cam, 1090, 730)
         self.group = pygame.sprite.Group()
         self.fly = False
+        self.seed = None
+        self.game_start = False
+        
+        
+    def creat_world(self, seed):
+        
+        self.world = World(1080, 720, seed)
         for row in self.world.terrain:
             for tile in row:
                 self.group.add(tile)
+        self.game_start = True
+                
+    
+    def draw_begin(self):
         
-
+        self.screen.fill("black")
+        screen.blit(self.background,(0,0))
+        
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN: # vérifie pression de touche 
+                
+                if event.key == pygame.K_SPACE: # Si échappe alors quitte le jeu
+                    self.seed = random.randint(0, 0xFFFFFFFF)
+                    self.creat_world(self.seed)
+                    self.game_start = True
+        
+        pygame.display.flip()
+        
 
     def handling_events(self): # Fonction qui gère les évènements
 
@@ -54,11 +77,17 @@ class Game:
 
     def run(self): # Fonction principale qui fait tourner le jeu
         while self.running: # Tant que le jeu tourne
-            # Appel des trois fonctions précédentes
+            
             self.handling_events()
-            self.update()
-            self.draw()
-            self.clock.tick(60) # Limite les FPS à 60
+            
+            if self.game_start == False:
+                self.draw_begin()
+                
+            else:
+                # Appel des trois fonctions précédentes
+                self.update()
+                self.draw()
+                self.clock.tick(60) # Limite les FPS à 60
             
                 
 

@@ -4,13 +4,11 @@ import pygame
 from tiles import *
 
 @staticmethod 
-def grille_aleatoire(width,height): # Méthode statique qui gènère une grille avec le bruit de Perlin
+def grille_aleatoire(width,height,gradients): # Méthode statique qui gènère une grille avec le bruit de Perlin
     tiles = [] # tableau de hauteurs
     for i in range (width): # On parcours le nombre de blocs de large que l'on veut générer
         tiles.append(abs(int(perlin_noise_octave(i/100,gradients)))) # On ajoute au tableau de hauteurs la hauteur générée par Perlin
     return tiles # On retourne le tableau
-
-gradients = [random.random() * 2 - 1 for _ in range(1000)] # Tableau de gradients entre -1 et 1
 
 def fade(t): # Fonction de fade qui adoucit le bruit de Perlin pour avoir des écarts de valeur de 1 maximum
     return t ** 3 * (t * (t * 6 - 15) + 10) # Formule mathématique de fade
@@ -40,15 +38,17 @@ def perlin_noise_octave(x, gradients, octaves=19, persistence=0.5):
 
 
 class World():
-    def __init__(self, width, height):
+    def __init__(self, width, height, seed):
         self.width = width # Nombre de tuiles de large
         self.height = height//32 # Nombre de tuiles de hauteur / Taille d'une tuile
+        random.seed(seed)
+        self.gradients = [random.random() * 2 - 1 for _ in range(1000)] # Tableau de gradients entre -1 et 1
         self.terrain = self.generate() # Le terrain généré
         
  # Ensemble des textures de chaque tuile
         
     def generate(self): # Fonction qui génère le terrain
-        grid = grille_aleatoire(self.width, self.height) # On génère notre tableau de hauteur 
+        grid = grille_aleatoire(self.width, self.height, self.gradients) # On génère notre tableau de hauteur 
         tiles = [] # Initialisation de notre grille de tuiles
         for i in range(self.width): # On parcours la largeur
             row = []  # Créer une nouvelle ligne pour chaque i
