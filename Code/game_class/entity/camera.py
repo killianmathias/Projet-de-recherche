@@ -6,9 +6,28 @@ class Camera (pygame.sprite.Sprite):
         super().__init__()
         self.rect = pygame.Rect(0, 0, width, height)
         self.rect.center = (x, y)
+        self.speed = 15
         
         
-    def update(self, position_player):
-        self.rect.center = position_player
+    def update(self, position_player, fly):
+        if not fly:
+            self.rect.center = position_player
         
+        else:
+
+            dx = 0
+            dy = 0
+            
+            key = pygame.key.get_pressed()
+            if key[pygame.K_q]:
+                dx -= self.speed
+            if key[pygame.K_d]:
+                dx += self.speed
+            if key[pygame.K_s]:
+                dy += self.speed
+            if key[pygame.K_z]:
+                dy -= self.speed
+        
+            self.rect.x += dx
+            self.rect.y += dy
         

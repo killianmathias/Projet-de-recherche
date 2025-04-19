@@ -4,13 +4,11 @@ import pygame
 from tiles import *
 
 @staticmethod 
-def grille_aleatoire(width,height): # Méthode statique qui gènère une grille avec le bruit de Perlin
+def grille_aleatoire(width,height,gradients): # Méthode statique qui gènère une grille avec le bruit de Perlin
     tiles = [] # tableau de hauteurs
     for i in range (width): # On parcours le nombre de blocs de large que l'on veut générer
         tiles.append(abs(int(perlin_noise_octave(i/100,gradients)))) # On ajoute au tableau de hauteurs la hauteur générée par Perlin
     return tiles # On retourne le tableau
-
-gradients = [random.random() * 2 - 1 for _ in range(1000)] # Tableau de gradients entre -1 et 1
 
 def fade(t): # Fonction de fade qui adoucit le bruit de Perlin pour avoir des écarts de valeur de 1 maximum
     return t ** 3 * (t * (t * 6 - 15) + 10) # Formule mathématique de fade
@@ -40,24 +38,39 @@ def perlin_noise_octave(x, gradients, octaves=19, persistence=0.5):
 
 
 class World():
-    def __init__(self, width, height):
+    def __init__(self, width, height, seed):
         self.width = width # Nombre de tuiles de large
         self.height = height//32 # Nombre de tuiles de hauteur / Taille d'une tuile
+        random.seed(seed)
+        self.gradients = [random.random() * 2 - 1 for _ in range(1000)] # Tableau de gradients entre -1 et 1
         self.terrain = self.generate() # Le terrain généré
         
  # Ensemble des textures de chaque tuile
         
     def generate(self): # Fonction qui génère le terrain
-        grid = grille_aleatoire(self.width, self.height) # On génère notre tableau de hauteur 
+        grid = grille_aleatoire(self.width, self.height, self.gradients) # On génère notre tableau de hauteur 
         tiles = [] # Initialisation de notre grille de tuiles
         for i in range(self.width): # On parcours la largeur
             row = []  # Créer une nouvelle ligne pour chaque i
-            for j in range(self.height+15): # On parcours la hauteur et on rajoute 15 de hauteur afin qu'il y ait au minimum 15 blocs sous le joueur
-                if (j<(grid[i]+15)): # Si la valeur de j est inférieure à la valeur générée par Perlin 
-                    if (j+1==(grid[i]+15)): # Si la prochaine valeur est la valeur générée par Perlin +15 alors on affiche de l'herbe
-                        row.append(Grass(i*32,(self.height+1-j)*32));
+            for j in range(self.height): # On parcours la hauteur et on rajoute 15 de hauteur afin qu'il y ait au minimum 15 blocs sous le joueur
+                if (j<(grid[i])): # Si la valeur de j est inférieure à la valeur générée par Perlin 
+                    if (j+1==(grid[i])): # Si la prochaine valeur est la valeur générée par Perlin +15 alors on affiche de l'herbe
+                        if (i>0 and grid[i-1]<grid[i]):
+                            row.append(Grass(i*32,(self.height+1-j)*32,'corner-left'))
+                        elif (i< len(grid) -1 and grid[i+1]<grid[i]):
+                            row.append(Grass(i*32,(self.height+1-j)*32,'corner-right'))
+                        else:
+                            row.append(Grass(i*32,(self.height+1-j)*32,'base'))
                     else:
-                        row.append(Dirt(i*32, (self.height+1-j)*32)) # Sinon on affiche de la terre
+                        if ((j+2)==(grid[i])):
+                            if (i>0 and grid[i-1]<grid[i]):
+                                row.append(Dirt(i*32,(self.height+1-j)*32,'corner-left'))
+                            elif (i< len(grid)-1 and grid[i+1]<grid[i]):
+                                row.append(Dirt(i*32,(self.height+1-j)*32,'corner-right'))
+                            else:
+                                row.append(Dirt(i*32,(self.height+1-j)*32,'base'))
+                        else:
+                            row.append(Dirt(i*32,(self.height+1-j)*32,'base'))
                 else:
                     row.append(Air(i*32,(self.height-j)*32))  # Sinon on affiche de l'air
             tiles.append(row)  # Ajouter la ligne à tiles 
@@ -68,6 +81,8 @@ class World():
     
     def draw(self, screen, camera): # Fonction qui affiche la grille de tuiles
         for x in range(self.width):
-            for y in range(self.height+15):
+            for y in range(self.height):
                 tile = self.terrain[x][y] # On récupère la tuile à la position [x][y]
-                tile.draw(screen, camera) # On appelle la fonction draw de chaque tuile
+                tile.can_touch = False
+                if camera.rect.colliderect(tile.rect):
+                    tile.draw(screen, camera) # On appelle la fonction draw de chaque tuile
