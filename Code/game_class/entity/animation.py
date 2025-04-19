@@ -3,9 +3,12 @@ import random
 
 class AnimateSprite(pygame.sprite.Sprite):
 
-    def __init__(self,sprite_name):
+    def __init__(self,sprite_name,scale):
         super().__init__()
-        self.image = pygame.image.load(f"Code/textures/{sprite_name}/{sprite_name}0.png")
+        img = pygame.image.load(f"Code/textures/{sprite_name}/{sprite_name}0.png")
+        self.width = int(img.get_width() * scale)
+        self.height = int(img.get_height() * scale)
+        self.image = self.image = pygame.transform.scale(img, (self.width, self.height))
         self.current_image = 0
         self.images = animations.get(sprite_name)
         self.animation = False

@@ -1,6 +1,6 @@
-from tiles.tile import Tile
 import pygame
 import os
+from .tile import Tile
 
 class Dirt(Tile):
     def __init__(self, x, y,position):

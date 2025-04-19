@@ -1,5 +1,5 @@
 import pygame
-from entity import Player
+from entity import *
 from world import *
 
 
@@ -11,10 +11,13 @@ class Game:
          # Le joueur
         self.background =pygame.transform.scale(pygame.image.load("Code/textures/Background/1.png"), (1080*5,720*5)) # L'image de background (qui changera en fonction des biomes)
         self.world = World(1080,720) # Le monde généré avec des tuiles
-        self.player = Player(540,400,0.05,5)
+        self.player = Player(0, 0 ,1,5)
+        x_cam, y_cam = self.player.rect.center
+        self.camera = Camera(x_cam, y_cam, 1080, 720)
         self.group = pygame.sprite.Group()
         self.ticks_count=0
         
+        self.fly = False
         for row in self.world.terrain:
             for tile in row:
                 self.group.add(tile)
@@ -24,34 +27,31 @@ class Game:
     def handling_events(self): # Fonction qui gère les évènements
 
         for event in pygame.event.get(): # Boucle qui parcours les évènements
-                if event.type == pygame.QUIT: # Si l'évènement est de quitter la fenêtre
-                    self.running= False # On arrête le jeu
-        keys = pygame.key.get_pressed() # Ensemble des touches pressées
-        if keys[pygame.K_q]: # Si la touche est le bouton gauche
-            self.player.velocity[0]=-1 # Le joueur se déplace à gauche
-        elif keys[pygame.K_d]: # Si la touche est le bouton droit
-            self.player.velocity[0]=1 # Le joueur se déplace à droite
-        else:
-            self.player.velocity[0] =0 # Le joueur ne se déplace plus
+            if event.type == pygame.QUIT: # Si l'évènement est de quitter la fenêtre
+                self.running= False # On arrête le jeu
+                
+            if event.type == pygame.KEYDOWN: # vérifie pression de touche 
+                if event.key == pygame.K_ESCAPE: # Si échappe alors quitte le jeu
+                    self.running = False
+                    
+            if event.type == pygame.KEYUP: # vérifie arrêt pression de touche 
+                if event.key == pygame.K_p: # Si p alors fly ou non
+                    if self.fly:
+                        self.player.rect.center = self.camera.rect.center
+                    self.fly = not self.fly
 
-        if keys[pygame.K_SPACE]: # Si la touche pressée est la touche espace
-            self.player.jumping=True # Le joueur saute
         
     def update(self): # Fonction qui gère la mise à jour des informations
-        self.player.apply_gravity() # Appel de la fonction qui applique la gravité au joueur
-        self.player.move(self.world.terrain)
-        if (self.player.jumping):
-            self.player.jump()
-            self.player.jumping=False
-        self.player.update_animation() # Déplacement du joueur sur le terrain
+        if not self.fly:
+            self.player.update(self.group) # Déplacement du joueur sur le terrain
+        self.camera.update(self.player.rect.center, self.fly)
+        self.player.update_animation()
 
-
-
-    def display(self): # Fonction qui gère l'affichage
+    def draw(self): # Fonction qui gère l'affichage
         self.screen.fill("black") # Remplir le fond en noir
         screen.blit(self.background,(0,0)) # Background
-        self.world.draw(self.screen) # Dessiner le monde avec ses tuiles
-        self.player.draw(self.screen) # Dessiner le joueur
+        self.world.draw(self.screen, self.camera) # Dessiner le monde avec ses tuiles
+        self.player.draw(self.screen, self.camera) # Dessiner le joueur
         pygame.display.flip() # Mise à jour des informations sur l'écran
 
     def run(self): # Fonction principale qui fait tourner le jeu
@@ -59,11 +59,7 @@ class Game:
             # Appel des trois fonctions précédentes
             self.handling_events()
             self.update()
-            self.display()
-            self.ticks_count+=1
-            if self.ticks_count%30==0:
-                self.ticks_count=0
-                self.player.can_jump=True
+            self.draw()
             self.clock.tick(60) # Limite les FPS à 60
                 
 
