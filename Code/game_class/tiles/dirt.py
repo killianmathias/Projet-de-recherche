@@ -3,34 +3,47 @@ import os
 from .tile import Tile
 
 class Dirt(Tile):
-    def __init__(self, x, y,position):
+    def __init__(self, x, y,position,biome):
         super().__init__(x, y)
         self.is_solid =True
         self.position = position
-        self.texture = textures[position]
+        self.texture = textures[biome][position]
     
 
 
 def load_animation_images():
-    images = {}
+    base_folder = 'Code/textures/tiles/dirt'
+    biome_textures = {}
 
-    dossier = 'Code/textures/tiles/dirt/'
-    for nom_fichier in os.listdir(dossier):
-        chemin_complet = os.path.join(dossier, nom_fichier)
-        # Chargement de l'image
-        image = pygame.image.load(chemin_complet)
+    for biome in os.listdir(base_folder):
+        biome_path = os.path.join(base_folder, biome)
+        if not os.path.isdir(biome_path):
+            continue  # Ignore les fichiers
 
-        # Suppression de l'extension
-        nom_sans_ext = os.path.splitext(nom_fichier)[0]  # 'grass-corner-left'
+        biome_textures[biome] = {}
 
-        # Extraction de la position : on prend tout après le premier tiret
-        parties = nom_sans_ext.split('-')
-        if len(parties) >= 2:
-            position = '-'.join(parties[1:])  # 'corner-left'
-            images[position] = image
-        else:
-            print(f"Nom de fichier inattendu : {nom_fichier}")
+        for filename in os.listdir(biome_path):
+            file_path = os.path.join(biome_path, filename)
 
-    return images
+            if not filename.endswith(('.png', '.jpg', '.bmp')):
+                continue  # Ignore les fichiers non image
+
+            try:
+                image = pygame.image.load(file_path)
+            except pygame.error as e:
+                print(f"Erreur de chargement de l'image {file_path}: {e}")
+                continue
+
+            # Enlève l'extension
+            name_without_ext = os.path.splitext(filename)[0]
+            parts = name_without_ext.split('-')
+
+            if len(parts) >= 2:
+                position = '-'.join(parts[1:])
+                biome_textures[biome][position] = image
+            else:
+                print(f"Nom de fichier inattendu : {filename}")
+
+    return biome_textures
 
 textures = load_animation_images()
