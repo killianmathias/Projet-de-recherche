@@ -3,6 +3,7 @@ import random
 import os
 from entity import *
 from world import *
+from selector import *
 
 class Game:
     def __init__(self, screen):
@@ -30,6 +31,8 @@ class Game:
         self.fly = False
         self.seed = None
         self.game_start = False
+
+        self.selector = Selector()
 
     def create_world(self, seed):
         self.world = World(1080, 2000, seed)
@@ -67,6 +70,7 @@ class Game:
             self.player.update(self.group)
 
         self.camera.update(self.player.rect.center, self.fly)
+        self.selector.update(self.group,self.camera,self.world)
 
         # Transition de background fluide
         biome = self.world.biomes[self.player.rect.x // 32]
@@ -78,6 +82,7 @@ class Game:
             self.background_alpha = 0
 
         self.player.update_animation()
+       
 
     def draw(self):
         self.screen.fill("black")
@@ -101,8 +106,9 @@ class Game:
         else:
             self.screen.blit(self.current_background, (0, 0))
 
-        self.world.draw(self.screen, self.camera)
+        self.world.draw(self.screen, self.camera,self.group)
         self.player.draw(self.screen, self.camera)
+        self.selector.draw(self.screen,self.camera)
         pygame.display.flip()
 
     def run(self):

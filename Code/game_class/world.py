@@ -52,6 +52,7 @@ class World():
         self.gradients = [random.random() * 2 - 1 for _ in range(width)]
         self.temp_gradients = [random.random() * 2 - 1 for _ in range(width)] # Tableau de gradients entre -1 et 1
         self.humidity_gradients = [random.random() * 2 - 1 for _ in range(width)]
+        self.heights =[]
         self.biomes = []
         self.terrain = self.generate() # Le terrain généré
         
@@ -60,6 +61,7 @@ class World():
         
     def generate(self): # Fonction qui génère le terrain
         grid = grille_aleatoire(self.width, self.height, self.gradients,100) # On génère notre tableau de hauteur 
+        self.heights = grid
         temperature = grille_perlin(self.width, self.height, self.temp_gradients,300)
         humidity = grille_perlin(self.width, self.height, self.humidity_gradients,300)
 
@@ -132,10 +134,8 @@ class World():
                 return "toundra"
             
     
-    def draw(self, screen, camera): # Fonction qui affiche la grille de tuiles
-        for x in range(self.width):
-            for y in range(self.height):
-                tile = self.terrain[x][y] # On récupère la tuile à la position [x][y]
+    def draw(self, screen, camera,group): # Fonction qui affiche la grille de tuiles
+        for tile in group: # On récupère la tuile à la position [x][y]
                 tile.can_touch = False
                 if camera.rect.colliderect(tile.rect):
                     tile.draw(screen, camera) # On appelle la fonction draw de chaque tuile
