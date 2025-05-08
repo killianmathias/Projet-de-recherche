@@ -151,11 +151,33 @@ Afin de bien comprendre comment nous nous y sommes pris dans un premier temps po
   \caption{Exemple de tableau de valeurs aléatoires avec x égal à 5}
   \label{tableau_aleatoire}
   \end{table}
-  Une fois que nous avons obtenu notre tableau de valeurs, nous allons le lisser plusieurs fois à l’aide d’un algorithme. L’objectif est que, après avoir multiplié ces valeurs par une hauteur maximale (appelée valeur de y maximum), la différence entre deux valeurs voisines soit au maximum de 1. Cela permet d’obtenir une transition douce et progressive entre les valeurs, sans saut brusque. Ce processus va donc nous permettre d'avoir un terrain avec du relief réaliste. Dans un premier temps, on choisit que la tuile la plus haute sur chaque colonne est un bloc d'herbe et les tuiles en dessous de la Terre. Par défaut, le reste des tuiles sont de l'air.\par
+  Une fois que nous avons obtenu notre tableau de valeurs, nous allons le lisser 100 fois à l’aide du Bruit de Perlin. L’objectif est que, après avoir multiplié ces valeurs par une hauteur maximale (appelée valeur de y maximum), la différence entre deux valeurs voisines soit au maximum de 1. Cela permet d’obtenir une transition douce et progressive entre les valeurs, sans saut brusque. Ce processus va donc nous permettre d'avoir un terrain avec du relief réaliste. Dans un premier temps, on choisit que la tuile la plus haute sur chaque colonne est un bloc d'herbe et les tuiles en dessous de la Terre. Par défaut, le reste des tuiles sont de l'air.\par
 \subsection{Collisions}
   Notre terrain est maintenant opérationnel et le joueur peut donc se déplacer dessus à une exception près, les collisions. En effet, bien que notre personnage puisse se déplacer, il peut passer à travers le terrain et les tuiles générées. Comme le joueur, les tuiles sont aussi définies par un \textbf{rect}. Nous avons donc utilisé la méthode \textbf{collide\_rect} de Pygame qui va détecter les collisions entre le joueur et les tuiles (sauf les tuiles de type air) grâce à leurs \textbf{rect}. Ensuite, il suffit juste de dire que le joueur ne peut pas se déplacer dans la direction de la collision et notre personnage pourra se mouvoir sur le terrain sans passer à travers. \par
 
-  \subsection{Génération procédurale des biomes}
+\subsection{Génération procédurale des biomes}
+Afin d'avoir une implémentation plus conforme au jeu de base, nous avons décidé de mettre en place un système de génération procédurale pour générer des biomes.
+Un biome est une région qui présente différentes caractéristiques géographiques, notamment les végétaux, le climat ainsi que des espèces spécifiques. Deux paramètres très importants à prendre en compte dans un biome sont la température et l'humidité. En effet, là où la biome Jungle à la figure \ref{jungle} est chaud et sec, le biome Toundra à la figure \ref{toundra} est froid et sec.\par
+
+\begin{figure}[!h]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{assets/jungle.png}
+    \caption{Biome Jungle}
+    \label{jungle}
+  \end{subfigure}
+  \hspace{1cm}
+  \begin{subfigure}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{assets/toundra.png}
+    \caption{Biome Toundra}
+    \label{toundra}
+  \end{subfigure}
+  \caption{Exemple de biomes du jeu Terraria}
+  \label{biomes}
+\end{figure}
+Pour notre implémentation, nous nous sommes donc basés sur ces deux paramètres. Comme pour la génération procédurale de terrain, nous avons générés deux tableaux de valeurs aléatoires comprises entre -1 et 1, un pour la température et un pour l'humidité. Nous avons ensuite appliqué le bruit de Perlin, pour lisser ces valeurs, 300 fois afin que les transitions entre les biomes soient fluides et douces. On stockera ensuite dans un tableau, pour chaque valeur de x, le biome correspondant afin de nous faciliter la tâche quant au rendu visuel.
 \section{Conclusion et Perspectives}
 
 \section{Bibliographie et références}
