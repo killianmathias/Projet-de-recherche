@@ -6,3 +6,4 @@ Pour arriver à ce but, nous devons donc rechercher des algorithmes procéduraux
 
 Afin de parvenir à notre but de réalisation du Terraria simplifié, nous avons choisi Python et sa bibliothèque Pygame car cette dernière simplifié tout ce qui concerne l'application visuelle, ce qui nous permettra donc de nous focaliser sur l'implémentation des algorithmes de génération procédurale.
 
+![Texte alternatif](Rapport/assets/toundra.png)
