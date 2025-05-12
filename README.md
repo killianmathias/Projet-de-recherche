@@ -8,4 +8,4 @@ Afin de parvenir à notre but de réalisation du Terraria simplifié, nous avons
 
 ![Texte alternatif](Rapport/assets/toundra.png)
 
-![Logo du projet](https://github.com/killianmathias/Projet-de-rechercher/raw/main/Rapport/assets/toundra.png)
+![Logo du projet]([https://github.com/killianmathias/Projet-de-rechercher/raw/main/Rapport/assets/toundra.png](https://github.com/killianmathias/Projet-de-recherche/blob/e1705e36c02d0863e387cedf08326da42d7415e5/Rapport/assets/toundra.png))
