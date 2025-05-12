@@ -1,4 +1,6 @@
 \documentclass{article}
+
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{url}
@@ -9,6 +11,7 @@
 \usepackage{geometry}
 \geometry{margin=2.5cm}
 \usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
 
 \title{Projet de recherche documentaire\\ \large Génération procédurale de décors}
 \author{Killian Mathias\\ Matthéo Girardclos}
@@ -17,33 +20,35 @@
 \begin{document}
 
 \maketitle
+\newpage
+
 \tableofcontents
 \newpage
+
 \section{Introduction}
 
 En informatique, la génération procédurale fait référence à la création automatique de contenu numérique, que ce soit des éléments en 2D ou 3D, des scénarios, des dialogues, ou même des niveaux de jeu. Cette technique s'appuie sur des algorithmes qui permettent de produire une grande quantité de contenu sans nécessiter l'intervention directe d'un humain. Elle est particulièrement prisée dans les secteurs du jeu vidéo et du cinéma, où elle aide à créer des environnements variés et immersifs.  Un exemple marquant de cette méthode est le jeu Minecraft, qui génère un monde ouvert de manière procédurale grâce à différentes couches d'algorithmes. D'autres jeux, comme Terraria ou No Man’s Sky, utilisent également cette approche pour offrir des mondes dynamiques et uniques.\par
 Créer des décors qui soient à la fois aléatoires et cohérents représente un vrai défi. Par exemple, modéliser des reliefs comme des montagnes ou des plaines peut être assez complexe. La génération procédurale aide à surmonter ce problème en appliquant des algorithmes adaptés, ce qui évite de devoir concevoir chaque carte de jeu à la main.\par
-  Dans le cadre de ce projet, notre but est de développer une version simplifiée de Terraria, un jeu de survie en 2D. Ce jeu, jouable en solo ou en multijoueur, permet aux joueurs d'explorer un monde divisé en biomes, de récolter des ressources et d'interagir avec leur environnement. Nous allons nous concentrer sur la génération du monde, des biomes et éventuellement des grottes, tout en veillant à optimiser l'implémentation pour garantir de bonnes performances.
+Dans le cadre de ce projet, notre but est de développer une version simplifiée de Terraria, un jeu de survie en 2D. Ce jeu, jouable en solo ou en multijoueur, permet aux joueurs d'explorer un monde divisé en biomes, de récolter des ressources et d'interagir avec leur environnement. Nous allons nous concentrer sur la génération du monde, des biomes et éventuellement des grottes, tout en veillant à optimiser l'implémentation pour garantir de bonnes performances.
 
 
 \section{Différentes approches}
 
 Afin de générer procéduralement un décor il existe plusieurs approches. Tout d'abord, les objectifs d'une implémentation à une autre ne sont pas exactement les mêmes, cependant cela reste de la génération procédurale. Dans cette section, nous présenterons plusieurs méthodes populaires, en les analysant sous l’angle de leur efficacité et de leur applicabilité à notre projet de génération d’un monde 2D de type Terraria.\par
-
 Tout d'abord afin de répondre à nos besoins nous devons créer des paysages avec des reliefs réalistes.
 
 \subsection{Génération de terrains et de reliefs}
 
-Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin et le bruit Simplex.
-
-D'après la page Wikipédia \cite{perlin}, le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
-Le bruit Simplex \cite{simplex_noise} a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
 \begin{wrapfigure}{r}{0.25\textwidth} % 'r' pour droite, largeur ajustée
   \centering
   \includegraphics[width=0.22\textwidth]{assets/Perlin_noise.jpg}
   \caption{Bruit de Perlin à 2 dimensions}
   \label{perlin}
 \end{wrapfigure}
+
+Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin et le bruit Simplex.\par
+D'après la page Wikipédia \cite{perlin}, le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
+Le bruit Simplex \cite{simplex_noise} a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
 
 \subsection{Génération de biomes}
 
@@ -52,14 +57,15 @@ La première approche a été créée par Steven Worley en 1996, et possède tro
 La seconde approche serait donc optimale car on pourrait réutiliser les algorithmes pour la génération de terrains directement pour les biomes. En effet, le Bruit de Perlin, en plus de générer les terrains, peut également nous permettre de définir une humidité ainsi qu'une température pour chaque bloc, ce qui nous permettra d'avoir de meilleures transitions entre les biomes et permettre une expérience plus agréable au joueur. On s'orientera donc vers cette approche-là car elle correspond plus à nos besoins. 
 
 \subsection{Génération de grottes et de cavernes}
+
 Une fois notre terrain et nos biomes générés, afin de notre implémentation se rapproche le plus de Terraria, il faut générer des cavernes et des grottes souterraines. Il existe également deux approches différentes pour concevoir cela qui sont le Random Walk \cite{random_walk} (ou Marche Aléatoire) et une méthode qui utilise des automates cellulaires \cite{automate_cellulaire}.\par
 La première méthode est un modèle mathématique qui permet de créer des donjons ainsi que des réseaux de tunnels. Nous nous focaliserons pas sur cette méthode car elle n'est pas utilisée par Terraria et que cela s'éloigne de la génération procédurale.\par 
 La seconde méthode, utilisée par Terraria mais également par le jeu de la vie, consiste en une grille régulière de cellule, et une cellule évolue en fonction de ses voisines ce qui permet de générer des grottes réalistes.
 
 \subsection{Génération de minerais et ressources}
+
 Maintenant que les grottes sont générées, il faudrait que le joueur puisse récolter des ressources. Nous n'irons pas aussi loin dans l'implémentation cependant nous générerons quand même des minerais. Il existe différentes méthodes qui permettent cela et qui sont la distribution par couches (ou Stratification \cite{stratification}) et le Bruit de Perlin appliqué au minerais. \par
 La première méthode est utilisée par Minecraft en combinaison avec le Bruit de Perlin, la seconde se combine avec la génération de terrain et donc nous utiliserons cette méthode car c'est également celle utilisée par Terraria. Nous verrons plus en détail comment nous l'utiliserons pour notre implémentation à la section \ref{Implémentation}.
-
 
 \subsection{Comparaison et choix des méthodes pour notre projet}
 
@@ -70,7 +76,9 @@ Comme nous avons pu le préciser lors des paragraphes précédents, la méthode 
 Nous avons vu ci-dessus les différents moyens d'appliquer la génération procédurale et les applications liées à ces moyens. Maintenant, nous devons définir une méthodologie afin de réaliser notre implémentation à partir des recherches effectuées.
 
 \subsection{Les outils utilisés}
+
 Afin de nous concentrer un maximum sur la recherche et l'application directe de la génération procédurale, nous avons choisi un langage que nous maîtrisons bien mais qui est bien documenté, Python. De plus, si nous voulons réaliser un jeu vidéo, nous ne pouvons pas le faire nativement et simplement, c'est pour cela que nous avons choisi le module Pygame, qui offre simplicité mais aussi une très bonne documentation, ce qui facilite l’appréhension de ce dernier.\par
+
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{0.2\textwidth}
@@ -86,10 +94,9 @@ Afin de nous concentrer un maximum sur la recherche et l'application directe de 
   \end{subfigure}
   \caption{Logos des bibliothèques Python et Pygame}
   \label{fig:logos_python}
-  
 \end{figure}
-Comme dit précédemment, nous connaissions déjà le langage python, nous n'avons donc pas eu beaucoup à apprendre. Cependant, le module Pygame était tout nouveau pour nous, nous nous sommes donc aidés de la documentation, de tutoriels sur YouTube mais aussi d'un livre \cite{prieur2019pygame}.\par
 
+Comme dit précédemment, nous connaissions déjà le langage python, nous n'avons donc pas eu beaucoup à apprendre. Cependant, le module Pygame était tout nouveau pour nous, nous nous sommes donc aidés de la documentation, de tutoriels sur YouTube mais aussi d'un livre \cite{prieur2019pygame}.\par
 Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un outil pour travailler et collaborer. Dans un premier temps, pour la communication nous avons utilisé Discord, qui est très pratique car on peut échanger via des messages, des appels audios, vidéos mais cet outil offre également la possibilité de partager son écran directement en appel. Le second outil de collaboration utilisé est Git avec Github afin de partager le code. C'est actuellement sur le marché le meilleur outil de versioning et de collaboration. De plus, afin d'adopter une méthode agile et travailler sans se répeter, nous avons utilisés l'outil Jira. Il permet de créer des tickets qui correspondent à des tâches à effectués, puis de définir des périodes de Sprint, période où l'on effectue un ensemble de tickets.\cite{cochoy2011perlin}
 
 \begin{figure}[!h]
@@ -113,15 +120,41 @@ Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un ou
   \end{subfigure}
   \caption{Logos des outils de communication et de collaboration}
   \label{fig:logos_collab}
-  
+\end{figure}
+
+\subsection{Analyse du jeu}
+
+Terraria est un jeu vidéo d'aventure et de construction développé par Re-Logic et publié en 2011 sur steam. Aujourd'hui, il est disponible sur la plupart des plateformes et est un incontournable du genre bac à sable. Son principe est très simple, vous apparaissez dans un monde généré aléatoirement sens objectifs particulier, le but est de faire ce que l'on veut.\par
+La map est une coupe verticale du monde, ce qui nous offre une vu en 2 dimension du monde. Ce dernier et composer d'une multitude de blocs qui forme montagnes, lac, forêts et biomes en tout genre comme sur la figure \ref{surface}. On retrouve également toute une partie souterraine composer de grottes et architectures variées, représentées sur la figure \ref{cavern}.\par
+L'objectif de notre implémentation vat être de réaliser l'aspect génération procédurale du jeu, ce qui représente la génération de sole avec une notion d'altitude pour représenter des montagnes et des plaine, la séparation du monde en plusieurs biomes pour apporter de la diversité à la surface et enfin un remplissage des sous-soles avec différents types de roches, comme des minerais, et des grottes.
+
+\begin{figure}[!h]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[height=95px]{assets/terraria_forest_biome.jpg}
+    \caption{Surface du jeu}
+    \label{surface}
+  \end{subfigure}
+  \hspace{1cm}
+  \begin{subfigure}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[height=95px]{assets/terraria_cavern.png}
+    \caption{Sous-sole du jeu}
+    \label{cavern}
+  \end{subfigure}
+  \caption{Exemple du jeu Terraria}
+  \label{ImageJeu}
 \end{figure}
 
 \subsection{Organisation du code}
+
 Pour avoir un code propre, et pour faciliter la compréhension entre nous, nous avons décidé au préalable d'une organisation et d'une structure de base. Le but était de créer un squelette de code qui nous permettrait de nous y retrouver facilement. Nous avons donc décidé de créer plusieurs fichiers, un pour chaque classe implémentée, chacun ayant une fonction précise. Nous avons pour cela créé un diagramme UML de classes que nous pouvons voir à la figure \ref{UML_class}.\par
-Nous avons tout d'abord une classe Tile qui hérite de pygame.Sprite du module Pygame car elle propose des méthodes pour gérer les collisions de manière optimale avec les tuiles, et ses sous classes qui sont les différents types de blocs que l'on peut trouver dans le jeu. Ces blocs seront générés un à un procéduralement et seront destructibles, d'où l'utilité des les définir un à un.\par
+Nous avons tout d'abord une classe Tile qui hérite de pygame.Sprite du module Pygame car elle propose des méthodes pour gérer les collisions de manière optimale avec les tuiles, et ses sous classes qui sont les différents types de blocs que l'on peut trouver dans le jeu. Ces blocs seront générés un à un procéduralement et seront destructibles, d'où l'utilité de les définir un à un.\par
 Ensuite, nous avons la classe World qui va être la classe responsable de la génération du monde de manière procédurale. Elle va notamment avoir pour attribut une matrice de Tuiles car notre jeu est dans un espace à deux dimensions.\par
 Puis, nous avons la classe Player qui va gérer le joueur, ses déplacements, ses interactions avec le monde et les blocs. Cette classe va hériter de classe pygame.Sprite.\par
 Enfin, la classe Game qui va être la classe principale du jeu, elle va gérer la boucle principale du jeu, les événements, l'affichage et le rafraîchissement de l'écran.\par
+
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\textwidth]{assets/UML_class.png}
@@ -130,32 +163,49 @@ Enfin, la classe Game qui va être la classe principale du jeu, elle va gérer l
 \end{figure}
 
 Maintenant que nous avons définit comment nous allions aborder ce projet ambitieux, nous allons voir comment nous avons implémenté notre reproduction de Terraria.
+
 \section{Implémentation et Résultats}
 \label{Implémentation}
 
 Avant même de commencer à avoir un terrain qui se génère procéduralement, il a déjà fallut instaurer les bases de notre implémentation.
 
 \subsection{Bases du jeu}
-  Tout d'abord, nous avons dû créer une fenêtre de jeu avec Pygame, puis définir la taille de la fenêtre. Ensuite, nous avons dû créer une boucle principale qui va gérer les événements du jeu, l'affichage et le rafraîchissement de l'écran avec trois méthodes qui sont respectivement \textbf{handling\_events}, \textbf{display} et \textbf{update}. Nous avons également dû définir un nombre de FPS (Images par secondes) afin d'avoir un affichage fluide et pas trop exigeant en ressources.\par
-Une fois l'étape précédente réalisé, nous avons implémenté le joueur grâce à la classe Player. Ce dernier est défini par une boîte de collision, nommée \textbf{rect}, et une texture. Il peut se déplacer dans les quatre directions bien que le déplacement vers le bas corresponde à la gravité et le déplacement vers le haut à un saut.\par
+
+Tout d'abord, nous avons dû créer une fenêtre de jeu avec Pygame, puis définir la taille de la fenêtre. Ensuite, nous avons dû créer une boucle principale qui va gérer les événements du jeu, l'affichage et le rafraîchissement de l'écran avec trois méthodes qui sont respectivement \textbf{handling\_events}, \textbf{display} et \textbf{update}. Nous avons également dû définir un nombre de FPS (Images par secondes) afin d'avoir un affichage fluide et pas trop exigeant en ressources.\par
+Une fois l'étape précédente réalisé, nous avons implémenté le joueur grâce à la classe Player. Ce dernier est défini par une boîte de collision, nommée \textbf{rect}, et une texture. Il peut se déplacer dans les quatre directions bien que le déplacement vers le bas corresponde à la gravité et le déplacement vers le haut à un saut. Lors-ce qu'il ce déplace, une animation est lui est appliquer en fonction de son mouvement et de sa direction.\par
+
 \subsection{Génération procédurale du terrain}
+
 La base de notre jeu est maintenant instaurée, avec un personnage qui peut se déplacer dans la fenêtre. Cependant, nous n'avons pas encore de décor, ni de monde. C'est ici que va intervenir la génération procédurale.\par
 Afin de bien comprendre comment nous nous y sommes pris dans un premier temps pour générer un terrain avec du relief, nous allons expliquer le fonctionnement du Bruit de Perlin à une dimension. Tout d'abord, nous avons définit un tableau de valeurs aléatoires entre -1 et 1.\par
+
+% faire une reference dans le text au tableau
+
 \begin{table}[h]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
-  \hline
-  0.42 & -0.87 & 0.15 & -0.33 & 0.98\\
-  \hline
+    \hline
+    0.42 & -0.87 & 0.15 & -0.33 & 0.98\\
+    \hline
   \end{tabular}
   \caption{Exemple de tableau de valeurs aléatoires avec x égal à 5}
   \label{tableau_aleatoire}
-  \end{table}
-  Une fois que nous avons obtenu notre tableau de valeurs, nous allons le lisser 100 fois à l’aide du Bruit de Perlin. L’objectif est que, après avoir multiplié ces valeurs par une hauteur maximale (appelée valeur de y maximum), la différence entre deux valeurs voisines soit au maximum de 1. Cela permet d’obtenir une transition douce et progressive entre les valeurs, sans saut brusque. Ce processus va donc nous permettre d'avoir un terrain avec du relief réaliste. Dans un premier temps, on choisit que la tuile la plus haute sur chaque colonne est un bloc d'herbe et les tuiles en dessous de la Terre. Par défaut, le reste des tuiles sont de l'air.\par
+\end{table}
+
+Une fois que nous avons obtenu notre tableau de valeurs, nous allons le lisser 100 fois à l’aide du Bruit de Perlin. L’objectif est que, après avoir multiplié ces valeurs par une hauteur maximale (appelée valeur de y maximum), la différence entre deux valeurs voisines soit au maximum de 1. Cela permet d’obtenir une transition douce et progressive entre les valeurs, sans saut brusque. Ce processus va donc nous permettre d'avoir un terrain avec du relief réaliste. Dans un premier temps, on choisit que la tuile la plus haute sur chaque colonne est un bloc d'herbe et les tuiles en dessous de la Terre. Par défaut, le reste des tuiles sont de l'air.\par % Peut être reformuler l'explication duu lissage
+
 \subsection{Collisions}
-  Notre terrain est maintenant opérationnel et le joueur peut donc se déplacer dessus à une exception près, les collisions. En effet, bien que notre personnage puisse se déplacer, il peut passer à travers le terrain et les tuiles générées. Comme le joueur, les tuiles sont aussi définies par un \textbf{rect}. Nous avons donc utilisé la méthode \textbf{collide\_rect} de Pygame qui va détecter les collisions entre le joueur et les tuiles (sauf les tuiles de type air) grâce à leurs \textbf{rect}. Ensuite, il suffit juste de dire que le joueur ne peut pas se déplacer dans la direction de la collision et notre personnage pourra se mouvoir sur le terrain sans passer à travers. \par
+
+Notre terrain est maintenant opérationnel et le joueur peut donc se déplacer dessus à une exception près, les collisions. En effet, bien que notre personnage puisse se déplacer, il peut passer à travers le terrain et les tuiles générées. Comme le joueur, les tuiles sont aussi définies par un \textbf{rect}. Nous avons donc utilisé la méthode \textbf{collide\_rect} de Pygame qui va détecter les collisions entre le joueur et les tuiles (sauf les tuiles de type air) grâce à leurs \textbf{rect}. Ensuite, il suffit juste de dire que le joueur ne peut pas se déplacer dans la direction de la collision et notre personnage pourra se mouvoir sur le terrain sans passer à travers. Pour éviter certains bug de collision, le personnage est placer à 1px du blocs dans lequel il allait rentrer au lieu d'être coller à lui. Cette petite différence n'est visible à l'œille nue et évite certain bug d'affichage. \par
+
+\subsection{Fonctionnalités et optimisations}
+
+Pour l'instant, notre personnage peut ce déplacer sur le terrain mais reste enfermer dans la fenêtre du jeu, or le monde que nous générons fair quelques millier de blocs de longueur. Il faudrait donc faire bouger la fenêtre en même temps que le joueur. Pour ce faire nous avons rajouter une caméra, symboliser par un simple rectangle. le personage ce situe toujours en son centre et tout les élément de la map sont affiché par rapport à la caméra.\par
+Cette gestion de la caméra par un \textbf{rect} nous permet quelques fonctionnalités. Comme les élément s'affiche par rapport à la caméra et non par rapport au joueur, alors on peut la déplacer volontairement pour offrir une vue spectateur. Le principe est simple, les touche ne font plus bouger le personnage mais la caméra, ce qui nous permet de nous déplacer rapidement quand l'on veut.\par 
+L'utilisation des rectangle de pygame nous permet également de fair quelques optimisations. Le jeu doit gérer une grande quantité de blocs doit effectuer des calculs sur chacun d'entre eux. Mais comme  seule le personnage peut interagir avec eux, alors il n'est pas nécessaire de faire des calculs sur les blocs en dehors de la caméra. Pour aller encore un peut plus loin dans l'optimisation, nous n'affichons pas les blocs hors de la caméra et nous rendons le personnage immobile lors que nous somme en mode spectateur pour éviter qu'il tombe dans le vide.
 
 \subsection{Génération procédurale des biomes}
+
 Afin d'avoir une implémentation plus conforme au jeu de base, nous avons décidé de mettre en place un système de génération procédurale pour générer des biomes.
 Un biome est une région qui présente différentes caractéristiques géographiques, notamment les végétaux, le climat ainsi que des espèces spécifiques. Deux paramètres très importants à prendre en compte dans un biome sont la température et l'humidité. En effet, là où la biome Jungle à la figure \ref{jungle} est chaud et sec, le biome Toundra à la figure \ref{toundra} est froid et sec.\par
 
@@ -177,8 +227,11 @@ Un biome est une région qui présente différentes caractéristiques géographi
   \caption{Exemple de biomes du jeu Terraria}
   \label{biomes}
 \end{figure}
+
 Pour notre implémentation, nous nous sommes donc basés sur ces deux paramètres. Comme pour la génération procédurale de terrain, nous avons générés deux tableaux de valeurs aléatoires comprises entre -1 et 1, un pour la température et un pour l'humidité. Nous avons ensuite appliqué le bruit de Perlin, pour lisser ces valeurs, 300 fois afin que les transitions entre les biomes soient fluides et douces. On stockera ensuite dans un tableau, pour chaque valeur de x, le biome correspondant afin de nous faciliter la tâche quant au rendu visuel.
+
 \section{Conclusion et Perspectives}
+\newpage
 
 \section{Bibliographie et références}
 \bibliographystyle{alpha}
