@@ -34,7 +34,7 @@
 
 \section{Introduction}
 
-En informatique, la génération procédurale fait référence à la création automatique de contenu numérique, que ce soit des éléments en 2D ou 3D, des scénarios, des dialogues, ou même des niveaux de jeu. Cette technique s'appuie sur des algorithmes qui permettent de produire une grande quantité de contenu sans nécessiter l'intervention directe d'un humain. Elle est particulièrement prisée dans les secteurs du jeu vidéo et du cinéma, où elle aide à créer des environnements variés et immersifs.  Un exemple marquant de cette méthode est le jeu Minecraft, qui génère un monde ouvert de manière procédurale grâce à différentes couches d'algorithmes. D'autres jeux, comme Terraria ou No Man’s Sky, utilisent également cette approche pour offrir des mondes dynamiques et uniques.\par
+En informatique, la génération procédurale fait référence à la création automatique de contenu numérique, que ce soit des éléments en 2D ou 3D, des scénarios, des dialogues, ou même des niveaux de jeu. Cette technique s'appuie sur des algorithmes qui permettent de produire une grande quantité de contenu sans nécessiter l'intervention directe d'un humain. Elle est particulièrement prisée dans les secteurs du jeu vidéo et du cinéma, où elle aide à créer des environnements variés et immersifs.  Un exemple marquant de cette méthode est le jeu Minecraft (voir figure \ref{minecraft}), qui génère un monde ouvert de manière procédurale grâce à différentes couches d'algorithmes. D'autres jeux, comme Terraria ou No Man’s Sky (voir figure \ref{nomanssky}), utilisent également cette approche pour offrir des mondes dynamiques et uniques.\par
 Créer des décors qui soient à la fois aléatoires et cohérents représente un vrai défi. Par exemple, modéliser des reliefs comme des montagnes ou des plaines peut être assez complexe. La génération procédurale aide à surmonter ce problème en appliquant des algorithmes adaptés, ce qui évite de devoir concevoir chaque carte de jeu à la main.\par
 Dans le cadre de ce projet, notre but est de développer une version simplifiée de Terraria, un jeu de survie en 2D. Ce jeu, jouable en solo ou en multijoueur, permet aux joueurs d'explorer un monde divisé en biomes, de récolter des ressources et d'interagir avec leur environnement. Nous allons nous concentrer sur la génération du monde, des biomes et éventuellement des grottes, tout en veillant à optimiser l'implémentation pour garantir de bonnes performances.
 \begin{figure}[!h]
@@ -43,12 +43,14 @@ Dans le cadre de ce projet, notre but est de développer une version simplifiée
     \centering
     \includegraphics[width=0.5\textwidth]{assets/nomanssky.png}
     \caption{No Man's Sky}
+    \label{nomanssky}
   \end{subfigure}
   \hspace{0.6cm}
   \begin{subfigure}[b]{0.4\textwidth}
     \centering
     \includegraphics[width=0.5\textwidth]{assets/minecraft.png}
     \caption{Minecraft}
+    \label{minecraft}
   \end{subfigure}
   \hspace{0.6cm}
   \label{games}
@@ -70,7 +72,7 @@ Tout d'abord afin de répondre à nos besoins nous devons créer des paysages av
   \label{perlin}
 \end{wrapfigure}
 
-Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin et le bruit Simplex.\par
+Pour créer des paysages avec des reliefs il existe deux algorithmes qui sont respectivement le bruit de Perlin (voir figure \ref{perlin}) et le bruit Simplex.\par
 D'après la page Wikipédia \cite{perlin}, le bruit de Perlin, développé par Ken Perlin en 1985, est un système de génération pseudo-aléatoire. Ce dernier cherchait à éliminer le look "machinique" des effets spéciaux du film \textit{TRON.} Son utilité principale est la génération procédurale de décors au nombre de dimensions que l'on souhaite mais il est plus fréquemment utilisé à 2 ou 3 dimensions. Nous rentrerons dans les détails de cet algorithme plus tard.\par
 Le bruit Simplex \cite{simplex_noise} a également été créé par Ken Perlin en 2001 avec le but de remédier aux limites de son algorithme précédent. Il est assez similaire au bruit de Perlin, mais il est plus efficace et est généralement utilisé pour travailler avec des espaces à plus de 3 dimensions. Nous ne verrons pas en détail cet algorithme, car bien qu'il soit plus performant, il est moins documenté que son prédécesseur et donc logiquement plus difficile à comprendre.
 \vspace{1cm}
@@ -83,8 +85,8 @@ Le bruit Simplex \cite{simplex_noise} a également été créé par Ken Perlin e
   \label{voronoi}
 \end{wrapfigure}
 
-Après la génération de nos terrains, nous prévoyons d'implémenter un système de biomes. Chaque biome, représentant une zone particulière du terrain, aura ses propres caractéristiques visuelles, avec des blocs dont les textures varieront selon le biome où ils se trouvent. Pour ce faire, il existe deux approches qui sont respectivement le Bruit Worley (ou Voronoï) et définir une carte avec des températures et une humidité.\par
-La première approche a été créée par Steven Worley en 1996, et possède trois noms : le Bruit de Worley \cite{worley_noise}, le bruit de Voronoï et le bruit Cellulaire. Cette approche se base sur le diagramme de Voronoï \cite{voronoi_diagram}, qui est un découpage d'un plan sous forme de cellules.\par
+Après la génération de nos terrains, nous prévoyons d'implémenter un système de biomes. Chaque biome, représentant une zone particulière du terrain, aura ses propres caractéristiques visuelles, avec des blocs dont les textures varieront selon le biome où ils se trouvent. Pour ce faire, il existe deux approches qui sont respectivement le Bruit Worley (ou Voronoï), illustré par la figure \ref{worley}, et définir une carte avec des températures et une humidité.\par
+La première approche a été créée par Steven Worley en 1996, et possède trois noms : le Bruit de Worley \cite{worley_noise}, le bruit de Voronoï (voir figure \ref{voronoi}) et le bruit Cellulaire. Cette approche se base sur le diagramme de Voronoï \cite{voronoi_diagram}, qui est un découpage d'un plan sous forme de cellules.\par
 
 
 
@@ -98,10 +100,12 @@ Dans notre cas, cette méthode n'est pas forcément pertinente car elle est plus
 
 La seconde approche serait donc optimale car on pourrait réutiliser les algorithmes pour la génération de terrains directement pour les biomes. En effet, le Bruit de Perlin, en plus de générer les terrains, peut également nous permettre de définir une humidité ainsi qu'une température pour chaque bloc, ce qui nous permettra d'avoir de meilleures transitions entre les biomes et permettre une expérience plus agréable au joueur. On s'orientera donc vers cette approche-là car elle correspond plus à nos besoins.
 \par
-Une fois notre terrain et nos biomes générés, afin de notre implémentation se rapproche le plus de Terraria, il faut générer des cavernes et des grottes souterraines. Il existe également deux approches différentes pour concevoir cela qui sont le Random Walk \cite{random_walk} (ou Marche Aléatoire) et une méthode qui utilise des automates cellulaires \cite{automate_cellulaire}.\par
+
 \vspace{1cm}
 \subsection{Génération de grottes et de cavernes}
-\begin{wrapfigure}[7]{l}{0.2\textwidth}
+Une fois notre terrain et nos biomes générés, afin de notre implémentation se rapproche le plus de Terraria, il faut générer des cavernes et des grottes souterraines. Il existe également deux approches différentes pour concevoir cela qui sont le Random Walk \cite{random_walk} (ou Marche Aléatoire) et une méthode qui utilise des automates cellulaires \cite{automate_cellulaire}.\par
+
+\begin{wrapfigure}[8]{l}{0.2\textwidth}
   \centering
   \includegraphics[width=0.18\textwidth]{assets/automate_cellulaire.png}
   \caption{Automate cellulaire}
@@ -112,7 +116,7 @@ Une fois notre terrain et nos biomes générés, afin de notre implémentation s
 
 
 La première méthode est un modèle mathématique qui permet de créer des donjons ainsi que des réseaux de tunnels. Nous nous focaliserons pas sur cette méthode car elle n'est pas utilisée par Terraria et que cela s'éloigne de la génération procédurale.\par 
-La seconde méthode, utilisée par Terraria mais également par le jeu de la vie, consiste en une grille régulière de cellule, et une cellule évolue en fonction de ses voisines ce qui permet de générer des grottes réalistes.
+La seconde méthode (voir figure \ref{automate_cellulaire}), utilisée par Terraria mais également par le jeu de la vie, consiste en une grille régulière de cellule, et une cellule évolue en fonction de ses voisines ce qui permet de générer des grottes réalistes.
 \par
 \vspace{2.5cm}
 \subsection{Génération de minerais et ressources}
@@ -129,45 +133,50 @@ Nous avons vu ci-dessus les différents moyens d'appliquer la génération proc�
 
 \subsection{Les outils utilisés}
 
-Afin de nous concentrer un maximum sur la recherche et l'application directe de la génération procédurale, nous avons choisi un langage que nous maîtrisons bien mais qui est bien documenté, Python. De plus, si nous voulons réaliser un jeu vidéo, nous ne pouvons pas le faire nativement et simplement, c'est pour cela que nous avons choisi le module Pygame, qui offre simplicité mais aussi une très bonne documentation, ce qui facilite l’appréhension de ce dernier.\par
+Afin de nous concentrer un maximum sur la recherche et l'application directe de la génération procédurale, nous avons choisi un langage que nous maîtrisons bien mais qui est bien documenté, Python (voir le logo à la figure \ref{logopython}). De plus, si nous voulons réaliser un jeu vidéo, nous ne pouvons pas le faire nativement et simplement, c'est pour cela que nous avons choisi le module Pygame (voir figure \ref{pygame}), qui offre simplicité mais aussi une très bonne documentation, ce qui facilite l’appréhension de ce dernier.\par
 
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{0.2\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{assets/python_logo.png}
+    \includegraphics[width=0.5\textwidth]{assets/python_logo.png}
     \caption{Logo Python}
+    \label{logopython}
   \end{subfigure}
   \hspace{0.6cm}
   \begin{subfigure}[b]{0.2\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{assets/pygame_logo.png}
+    \includegraphics[width=0.5\textwidth]{assets/pygame_logo.png}
     \caption{Logo Pygame}
+    \label{pygame}
   \end{subfigure}
   \caption{Logos des bibliothèques Python et Pygame}
   \label{fig:logos_python}
 \end{figure}
 
 Comme dit précédemment, nous connaissions déjà le langage python, nous n'avons donc pas eu beaucoup à apprendre. Cependant, le module Pygame était tout nouveau pour nous, nous nous sommes donc aidés de la documentation, de tutoriels sur YouTube mais aussi d'un livre \cite{prieur2019pygame}.\par
-Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un outil pour travailler et collaborer. Dans un premier temps, pour la communication nous avons utilisé Discord, qui est très pratique car on peut échanger via des messages, des appels audios, vidéos mais cet outil offre également la possibilité de partager son écran directement en appel. Le second outil de collaboration utilisé est Git avec Github afin de partager le code. C'est actuellement sur le marché le meilleur outil de versioning et de collaboration. De plus, afin d'adopter une méthode agile et travailler sans se répeter, nous avons utilisés l'outil Jira. Il permet de créer des tickets qui correspondent à des tâches à effectués, puis de définir des périodes de Sprint, période où l'on effectue un ensemble de tickets.\cite{cochoy2011perlin}
+Puisque ce projet devait se réaliser en duo, il nous fallait à tout prix un outil pour travailler et collaborer. Dans un premier temps, pour la communication nous avons utilisé Discord (voir figure \ref{discord}), qui est très pratique car on peut échanger via des messages, des appels audios, vidéos mais cet outil offre également la possibilité de partager son écran directement en appel. Le second outil de collaboration utilisé est Git (voir figure \ref{git}) avec Github afin de partager le code. C'est actuellement sur le marché le meilleur outil de versioning et de collaboration. De plus, afin d'adopter une méthode agile et travailler sans se répeter, nous avons utilisés l'outil Jira (voir figure \ref{jira}). Il permet de créer des tickets qui correspondent à des tâches à effectués, puis de définir des périodes de Sprint, période où l'on effectue un ensemble de tickets.\cite{cochoy2011perlin}
 \begin{figure}[!h]
   \centering
   \begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=0.5\textwidth]{assets/discord.png}
     \caption{Logo Discord}
+    \label{discord}
   \end{subfigure}
   \hspace{0.6cm}
   \begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=0.6\textwidth]{assets/git.png}
     \caption{Logo Git}
+    \label{git}
   \end{subfigure}
   \hspace{0.6cm}
   \begin{subfigure}[b]{0.2\textwidth}
     \centering
     \includegraphics[width=\textwidth]{assets/jira.png}
     \caption{Logo Jira}
+    \label{jira}
   \end{subfigure}
   \caption{Logos des outils de communication et de collaboration}
   \label{fig:logos_collab}
