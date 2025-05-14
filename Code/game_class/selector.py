@@ -18,7 +18,6 @@ class Selector(pygame.sprite.Sprite):
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # 1 = clic gauche
-                print("clic gauche activé")
                 self.delete=True
                 
 

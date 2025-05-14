@@ -56,6 +56,7 @@ class Game:
                     self.running = False
                 if not self.game_start and event.key == pygame.K_SPACE:
                     self.seed = random.randint(0, 0xFFFFFFFF)
+                    print(self.seed)
                     self.create_world(self.seed)
                     self.game_start = True
 
