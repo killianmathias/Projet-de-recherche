@@ -308,7 +308,13 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Caractéristiques biomes} : température, humidité, végétation, climat, espèces
+                \item \textbf{Exemples} : Jungle (chaud, sec), Toundra (froid, sec)
+                \item \textbf{Méthode} : bruit de Perlin, 1D, tableaux [-1, 1]
+                \item \textbf{Lissage} : 300 itérations, transitions douces
+            \end{itemize}
+
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -326,14 +332,20 @@
     \end{columns}
 \end{frame}
 
-\subsection{Destruction des blocks}
+\subsection{Destruction des blocs}
 
-\begin{frame}{Destruction des blocks}
+\begin{frame}{Destruction des blocs}
     \begin{columns}
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            
+            \begin{itemize}
+                \item \textbf{Fonction} : indicateur visuel, position souris, alignement bloc
+                \item \textbf{Comportement} : suivi souris, collision, superposition bloc
+                \item \textbf{Destruction bloc} : clic gauche, suppression bloc sélectionné
+                \item \textbf{But final (jeu)} : creuser, récolte minerais, fabrication outils/armures
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -359,7 +371,13 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Type de projet} : jeu immersif, monde ouvert, génération procédurale
+                \item \textbf{Déplacement joueur} : exploration libre, terrains variés, seed, unicité
+                \item \textbf{Collisions} : détection, interactions cohérentes, physique jeu
+                \item \textbf{Caméra} : dynamique, suivi joueur, mode spectateur, exploration aérienne
+                \item \textbf{Terrain modifiable} : destruction blocs, creuser, interaction environnement
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -377,7 +395,13 @@
 
 \begin{frame}{Conclusion et Perspectives}
     \centering
-    \lipsum[1][1-5]
+    \begin{itemize}
+        \item \textbf{Objectif \& choix} : génération procédurale, étude d’algorithmes, inspiration Terraria
+        \item \textbf{Résultats} : terrains/biomes générés par seed, mécaniques de base (déplacement, saut, cassage)
+        \item \textbf{Limites} : pas de grottes/minerais, pas de montagnes, optimisation à améliorer
+        \item \textbf{Apprentissages techniques} : génération procédurale, POO, Python, bonnes pratiques
+        \item \textbf{Travail en équipe} : collaboration, outils (Jira, Git), gestion de projet
+    \end{itemize}
 \end{frame}
 
 
