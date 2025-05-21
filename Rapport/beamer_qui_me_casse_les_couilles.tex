@@ -279,20 +279,22 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \begin{itemize}
-                \item \textbf{Joueur et tuiles} avec rect Pygame\\
-                \item collide\_rect pour détecter collisions
-                \item \textbf{Empêcher déplacement} si collision\\
-                \item \textbf{Caméra centrée sur joueur} : déplacement caméra, suivi Joueur
-                \item \textbf{Mode spectateur} : contrôle caméra, vue libre, exploration rapide
-                \item \textbf{Optimisation affichage} : calculs limités à la zone visible, blocs hors champ non affichés
-            \end{itemize}
-            % \begin{itemize}
-            %     \item \textbf{Terrain} : fonctionnel, collisions absentes
-            %     \item \textbf{Joueur et tuiles avec rect Pygame}
-            %     \item collide_rect pour détecter collisions
-            %     \item \textbf{Blocs} : herbe en haut, terre dessous, air ailleurs\\
-            % \end{itemize}
+            \begin{block}{Collisions}
+                \centering
+                \begin{itemize}
+                    \item \textbf{Joueur et tuiles} avec rect Pygame\\
+                    \item collide\_rect pour détecter collisions
+                    \item \textbf{Empêcher déplacement} si collision\\
+                \end{itemize}
+            \end{block}
+            \begin{block}{Fonctionnalités}
+                \centering
+                \begin{itemize}
+                    \item \textbf{Camera} centrée sur le joueur
+                    \item Mode \textbf{spectateur}
+                    \item \textbf{Optimisations} affichage/calculs
+                \end{itemize}
+            \end{block}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -320,7 +322,7 @@
             \begin{itemize}
                 \item \textbf{Caractéristiques biomes} : température, humidité, végétation, climat, espèces
                 \item \textbf{Exemples} : Jungle (chaud, sec), Toundra (froid, sec)
-                \item \textbf{Méthode} : bruit de Perlin, 1D, tableaux [-1, 1]
+                \item \textbf{Méthode} : bruit de Perlin, 1 dimension, tableaux [-1, 1]
                 \item \textbf{Lissage} : 300 itérations, transitions douces
             \end{itemize}
 
@@ -383,7 +385,7 @@
             \begin{itemize}
                 \item \textbf{Type de projet} : jeu immersif, monde ouvert, génération procédurale
                 \item \textbf{Déplacement joueur} : exploration libre, terrains variés, seed, unicité
-                \item \textbf{Collisions} : détection, interactions cohérentes, physique jeu
+                \item \textbf{Collisions} : détection, interactions cohérentes, physique du jeu
                 \item \textbf{Caméra} : dynamique, suivi joueur, mode spectateur, exploration aérienne
                 \item \textbf{Terrain modifiable} : destruction blocs, creuser, interaction environnement
             \end{itemize}
@@ -398,7 +400,19 @@
         \end{column}
     \end{columns}
 \end{frame}
-
+\begin{frame}
+    \includemedia[
+    width=0.6\linewidth,
+    height=0.45\linewidth,
+    activate=pageopen,
+    addresource=video.mp4,
+    flashvars={
+      source=video.mp4
+      &autoPlay=true
+      &loop=true
+    }
+  ]{}{VPlayer.swf}
+\end{frame}
 
 \section{Conclusion et Perspectives}
 
