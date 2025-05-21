@@ -31,3 +31,9 @@ class Camera (pygame.sprite.Sprite):
             self.rect.x += dx
             self.rect.y += dy
         
+    def draw(self, screen):
+        # x = int((screen.get_width() - self.rect.width)/2)
+        # y = int((screen.get_height() - self.rect.height)/2)
+        # rect = pygame.Rect(x, y, self.rect.width, self.rect.height)
+        # pygame.draw.rect(screen, (255, 0, 0), rect, 2)
+        return

@@ -17,6 +17,8 @@ class Tile(pygame.sprite.Sprite): # Classe Tuile
         x_cam, y_cam = camera.rect.topleft
         print_pos = (x_tile - x_cam + int((screen.get_width() - camera.rect.width)/2), y_tile  - y_cam + int((screen.get_height() - camera.rect.height)/2))
         screen.blit(self.texture, print_pos)
+        # rect = pygame.Rect(x_tile - x_cam + int((screen.get_width() - camera.rect.width)/2), y_tile - y_cam + int((screen.get_height() - camera.rect.height)/2), self.TILE_SIZE, self.TILE_SIZE)
+        # pygame.draw.rect(screen, (255, 0, 0), rect, 2)
          # On rajoute sur l'écran notre Tuile
         self.can_touch = True
         

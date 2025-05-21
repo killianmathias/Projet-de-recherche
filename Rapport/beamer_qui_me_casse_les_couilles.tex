@@ -1,0 +1,284 @@
+\documentclass[aspectratio=169]{beamer}
+
+\input{Code/custome}
+
+% Informações do documento
+\title[Génération procédurale]{Génération procédurale de décors}
+\subtitle{Projet de recherche documentaire}
+\author[K.Mathias, M.Girardclos]{Killian Mathias et Matthéo Girardclos}
+\institute[UMLP]{Université Marie et Louis Pasteur}
+\date{2024 - 2025}
+
+% Definir o nome do orientador
+\newcommand{\advisorname}{\textbf{Superviseur :} M. Pierre-Cyrille Héam}
+
+
+
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[t]{Sommaire}
+    \tableofcontents[hideallsubsections]
+\end{frame}
+
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+    \lipsum[1][1-5]
+    \vfill
+    \begin{figure}[!h]
+        \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{assets/nomanssky.png}
+        \end{subfigure}
+        \hspace{-1cm}
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{assets/minecraft.png}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+
+\section{Technologies et approches}
+
+\begin{frame}{Technologies et approches}
+    \tableofcontents[sections={2}]
+\end{frame}
+
+\subsection{Génération de terrains et de reliefs}
+
+\begin{frame}{Génération de terrains et de reliefs}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.5\textwidth]{assets/Perlin_noise.jpg}
+                \caption{Bruit de Perlin à 2 dimensions}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Génération de biomes}
+
+\begin{frame}{Génération de biomes}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.3\textwidth]{assets/voronoi.png}
+                \caption{Diagramme de Voronoï}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.3\textwidth]{assets/Worley.jpg}
+                \caption{Bruit de Worley}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Génération de grottes et de cavernes}
+
+\begin{frame}{Génération de grottes et de cavernes}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.5\textwidth]{assets/automate_cellulaire.png}
+                \caption{Automate cellulaire}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Génération de minerais et ressources}
+
+\begin{frame}{Génération de minerais et ressources}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.5\textwidth]{assets/stratification.png}
+                \caption{Distribution par couches de Minecraft}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\section{Méthodologie}
+
+\begin{frame}{Méthodologie}
+    \tableofcontents[sections={3}]
+\end{frame}
+
+\subsection{Outils utilisés}
+
+\begin{frame}{Outils utilisés}
+    \centering
+    \begin{tikzpicture}[scale=1, every node/.style={anchor=center}]
+        \node at (3, 6) {\includegraphics[width=2.3cm]{assets/python_logo.png}};
+        \node at (9, 6) {\includegraphics[width=2.8cm]{assets/pygame_logo.png}};
+
+        \node at (1.5, 2.5) {\includegraphics[width=2.3cm]{assets/discord.png}};
+        \node at (6, 2.5) {\includegraphics[width=2.5cm]{assets/git.png}};
+        \node at (10.5, 2.5) {\includegraphics[width=2.5cm]{assets/jira.png}};
+    \end{tikzpicture}
+\end{frame}
+
+\subsection{Analyse du jeu}
+
+\begin{frame}{Analyse du jeu}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.7\textwidth]{assets/terraria_forest_biome.jpg}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.7\textwidth]{assets/terraria_cavern.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Organisation du code}
+
+\begin{frame}{Organisation du code}
+    \begin{figure}
+        \includegraphics[height=0.8\textheight]{assets/UML_class.png}
+    \end{figure}
+\end{frame}
+
+
+\section{Implémentation}
+
+\begin{frame}{Implémentation}
+    \tableofcontents[sections={4}]
+\end{frame}
+
+\subsection{Bases du jeu}
+
+\begin{frame}{Bases du jeu}
+    \lipsum[1][1-5]
+\end{frame}
+
+\subsection{Génération procédurale du terrain}
+
+\begin{frame}{Génération procédurale du terrain}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.9\textwidth]{assets/tableau.png}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.7\textwidth]{assets/PerlinNoise1d.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Collisions et fonctionnalité}
+
+\begin{frame}{Collisions et fonctionnalité}
+    \begin{columns}
+        \centering
+        \begin{column}{0.5\textwidth}
+            \centering
+            \lipsum[1][1-5]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.5\textwidth]{assets/hit_box.png}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \captionsetup{format=sanslabel}
+                \includegraphics[width=0.5\textwidth]{assets/camera.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Génération procédurale des biomes}
+
+\begin{frame}{Génération procédurale des biomes}
+    
+\end{frame}
+
+
+\section{Résultats}
+
+\begin{frame}{Résultats}
+    
+\end{frame}
+
+
+\section{Conclusion et Perspectives}
+
+\begin{frame}{Conclusion et Perspectives}
+    
+\end{frame}
+
+
+\begin{frame}{Remerciements}
+    
+\end{frame}
+
+
+\end{document}

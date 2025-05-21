@@ -80,6 +80,6 @@ class Player(entity.animation.AnimateSprite): # Classe du joueur
         x_cam, y_cam = camera.rect.topleft
         print_pos = (x_player - x_cam + int((screen.get_width() - camera.rect.width)/2), y_player - y_cam + int((screen.get_height() - camera.rect.height)/2))
         screen.blit(self.image, print_pos) # On affiche le joueur au centre de l'écran
-        # rectangle = pygame.rect.Rect(camera.rect.width/2-25,camera.rect.height/2-25,50,50)
-        # pygame.draw.rect(screen,(255,0,0),rectangle)
+        # rect = pygame.Rect(x_player - x_cam + int((screen.get_width() - camera.rect.width)/2), y_player - y_cam + int((screen.get_height() - camera.rect.height)/2), self.width, self.height)
+        # pygame.draw.rect(screen, (255, 0, 0), rect, 2)
         

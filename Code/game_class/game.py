@@ -110,6 +110,7 @@ class Game:
         self.world.draw(self.screen, self.camera,self.group)
         self.player.draw(self.screen, self.camera)
         self.selector.draw(self.screen,self.camera)
+        self.camera.draw(self.screen)
         pygame.display.flip()
 
     def run(self):
