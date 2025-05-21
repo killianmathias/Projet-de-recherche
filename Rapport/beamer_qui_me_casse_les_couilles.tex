@@ -29,7 +29,7 @@
 \section{Introduction}
 
 \begin{frame}{Introduction}
-    \lipsum[1][1-5]
+    La génération procédurale en informatique permet de créer automatiquement du contenu numérique varié, notamment dans les jeux vidéo, en s’appuyant sur des algorithmes. Ce projet vise à développer une version simplifiée de Terraria, en mettant l’accent sur la génération du monde, des biomes et des grottes.
     \vfill
     \begin{figure}[!h]
         \centering
@@ -59,7 +59,11 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item Deux algorithmes utilisés : \textbf{bruit de Perlin} et \textbf{bruit Simplex}.
+                \item \textbf{Bruit de Perlin} (1985) : Ken Perlin, pseudo-aléatoire, 2D/3D, décors procéduraux.
+                \item \textbf{Bruit Simplex} (2001) : Ken Perlin, optimisation, >3D, plus rapide, moins documenté.
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -80,7 +84,13 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Biomes} : zones, textures, caractéristiques
+                \item \textbf{Méthodes} : bruit Worley, carte température/humidité
+                \item \textbf{Bruit Worley} : Voronoï, transitions brusques, peu adapté
+                \item \textbf{Température/humidité} : Perlin, transitions douces, réutilisation algorithme
+                \item \textbf{Choix} : approche température/humidité
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -107,7 +117,11 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Méthodes} : Random Walk, automates cellulaires
+                \item \textbf{Random Walk} : donjons, tunnels, pas utilisé, éloigné de Terraria
+                \item \textbf{Automates cellulaires} : grille, évolution cellules, grottes réalistes, utilisé par Terraria
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -128,7 +142,11 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Méthodes} : stratification, Perlin appliqué aux minerais
+                \item \textbf{Stratification} : couches, utilisé par Minecraft, combiné avec Perlin
+                \item \textbf{Perlin} : intégré à terrain, utilisé par Terraria
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -170,7 +188,13 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Terraria} : bac à sable, aventure, construction, Re-Logic, 2011
+                \item \textbf{Gameplay} : monde procédural, outils, inventaire, blocs, crafting
+                \item \textbf{Carte} : 2D verticale, montagnes, lacs, forêts, biomes, souterrains
+                \item \textbf{Souterrain} : minerais, grottes, architectures, creusage
+                \item \textbf{Objectif projet} : génération terrain, altitude, biomes, sous-sols (minerais, cavernes)
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -204,7 +228,7 @@
 \subsection{Bases du jeu}
 
 \begin{frame}{Bases du jeu}
-    \lipsum[1][1-5]
+    Nous avons d’abord créé une fenêtre de jeu avec Pygame et mis en place une boucle principale pour gérer les événements, l’affichage et le rafraîchissement à un nombre défini de FPS pour assurer la fluidité. Puis, nous avons implémenté un joueur avec une boîte de collision et une animation adaptée à ses déplacements, en nous inspirant d’une playlist YouTube de Coding With Russ.
 \end{frame}
 
 \subsection{Génération procédurale du terrain}
@@ -214,7 +238,16 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Choix technique} : bruit de Perlin 1D, algorithme léger
+                \item \textbf{Processus} :
+                    - Tableau valeurs aléatoires (-1 à 1)\\
+                    - Lissage 100 fois avec Perlin\\
+                    - Valeurs multipliées par hauteur max\\
+                    - Transitions douces (différence max = 1)
+                \item \textbf{Résultat} : terrain avec relief réaliste
+                \item \textbf{Blocs} : herbe en haut, terre dessous, air ailleurs\\
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
@@ -237,7 +270,20 @@
         \centering
         \begin{column}{0.5\textwidth}
             \centering
-            \lipsum[1][1-5]
+            \begin{itemize}
+                \item \textbf{Terrain} : fonctionnel, collisions absentes\\
+                \item \textbf{Joueur et tuiles avec rect Pygame}\\
+                \item collide\_rect pour détecter collisions
+                \item \textbf{Empêcher déplacement} dans direction collision\\
+                
+                \item \textbf{Bug évité} : joueur placé 1 pixel avant bloc\\
+            \end{itemize}
+            % \begin{itemize}
+            %     \item \textbf{Terrain} : fonctionnel, collisions absentes
+            %     \item \textbf{Joueur et tuiles avec rect Pygame}
+            %     \item collide_rect pour détecter collisions
+            %     \item \textbf{Blocs} : herbe en haut, terre dessous, air ailleurs\\
+            % \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
