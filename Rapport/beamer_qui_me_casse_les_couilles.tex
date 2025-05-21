@@ -62,7 +62,7 @@
             \begin{itemize}
                 \item Deux algorithmes utilisés : \textbf{bruit de Perlin} et \textbf{bruit Simplex}.
                 \item \textbf{Bruit de Perlin} (1985) : Ken Perlin, pseudo-aléatoire, 2D/3D, décors procéduraux.
-                \item \textbf{Bruit Simplex} (2001) : Ken Perlin, optimisation, >3D, plus rapide, moins documenté.
+                \item \textbf{Bruit Simplex} (2001) : Ken Perlin, optimisation, > 3D, plus rapide, moins documenté.
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
@@ -119,7 +119,7 @@
             \centering
             \begin{itemize}
                 \item \textbf{Méthodes} : Random Walk, automates cellulaires
-                \item \textbf{Random Walk} : donjons, tunnels, pas utilisé, éloigné de Terraria
+                \item \textbf{Random Walk} : donjons, tunnels, éloigné de Terraria
                 \item \textbf{Automates cellulaires} : grille, évolution cellules, grottes réalistes, utilisé par Terraria
             \end{itemize}
         \end{column}
@@ -145,7 +145,7 @@
             \begin{itemize}
                 \item \textbf{Méthodes} : stratification, Perlin appliqué aux minerais
                 \item \textbf{Stratification} : couches, utilisé par Minecraft, combiné avec Perlin
-                \item \textbf{Perlin} : intégré à terrain, utilisé par Terraria
+                \item \textbf{Perlin} : intégré au terrain, utilisé par Terraria
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
@@ -228,7 +228,16 @@
 \subsection{Bases du jeu}
 
 \begin{frame}{Bases du jeu}
-    Nous avons d’abord créé une fenêtre de jeu avec Pygame et mis en place une boucle principale pour gérer les événements, l’affichage et le rafraîchissement à un nombre défini de FPS pour assurer la fluidité. Puis, nous avons implémenté un joueur avec une boîte de collision et une animation adaptée à ses déplacements, en nous inspirant d’une playlist YouTube de Coding With Russ.
+    \centering
+    \begin{itemize}
+        \item \textbf{Fenêtre de jeu} avec Pygame
+        \item \textbf{Boucle de jeu principale}(Gestion des événements)
+        \item \textbf{Joueur} : \\
+        - Boîte de collision\\
+        - Déplacement (horizontal, saut et gravité)\\
+        - Animation
+        
+    \end{itemize}
 \end{frame}
 
 \subsection{Génération procédurale du terrain}
@@ -239,12 +248,12 @@
         \begin{column}{0.5\textwidth}
             \centering
             \begin{itemize}
-                \item \textbf{Choix technique} : bruit de Perlin 1D, algorithme léger
-                \item \textbf{Processus} :
+                \item \textbf{Choix technique} : bruit de Perlin 1 dimension, algorithme léger
+                \item \textbf{Processus} :\\
                     - Tableau valeurs aléatoires (-1 à 1)\\
                     - Lissage 100 fois avec Perlin\\
                     - Valeurs multipliées par hauteur max\\
-                    - Transitions douces (différence max = 1)
+                    - Transitions douces
                 \item \textbf{Résultat} : terrain avec relief réaliste
                 \item \textbf{Blocs} : herbe en haut, terre dessous, air ailleurs\\
             \end{itemize}
@@ -271,12 +280,10 @@
         \begin{column}{0.5\textwidth}
             \centering
             \begin{itemize}
-                \item \textbf{Terrain} : fonctionnel, collisions absentes\\
-                \item \textbf{Joueur et tuiles avec rect Pygame}\\
+                \item \textbf{Joueur et tuiles} avec rect Pygame\\
                 \item collide\_rect pour détecter collisions
-                \item \textbf{Empêcher déplacement} dans direction collision\\
+                \item \textbf{Empêcher déplacement} si collision\\
                 
-                \item \textbf{Bug évité} : joueur placé 1 pixel avant bloc\\
             \end{itemize}
             % \begin{itemize}
             %     \item \textbf{Terrain} : fonctionnel, collisions absentes
